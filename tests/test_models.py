@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
     def test_tile(self):
-        tile = Tile('B', 3)
+        tile = Tile('B',3)
         self.assertEqual(tile.letter, 'B')
         self.assertEqual(tile.value, 3)
 
