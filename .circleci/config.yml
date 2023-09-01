@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: cimg/python:3.10.1
-    - run:
+      - run:
           name: Setup Code Climate test-reporter
           command: |
               # download test reporter as a static binary
