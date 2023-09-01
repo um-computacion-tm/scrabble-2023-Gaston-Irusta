@@ -4,8 +4,8 @@ from unittest.mock import patch
 
 class TestTiles(unittest.TestCase):
     def test_tile(self):
-        tile = Tile('B',3)
-        self.assertEqual(tile.letter, 'B')
+        tile = Tile('C',3)
+        self.assertEqual(tile.letter, 'C')
         self.assertEqual(tile.value, 3)
 
 class TestBagTiles(unittest.TestCase):
