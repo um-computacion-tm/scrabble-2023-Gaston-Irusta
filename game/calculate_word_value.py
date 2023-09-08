@@ -1,7 +1,12 @@
-'''from game.models import Tile
-from game.cell import Cell
+# from game.cell import Cell
 
-def calculate_word_value(word):
-    for index in range(len(word)):
-        word_value = 0
-        word_value = word_value + Cell.calculate_value()'''
+# def calculate_word_value(word: list[Cell]): 
+#     value: int = 0
+#     multiplier_word = None
+#     for cell in word:
+#         value = value + cell.calculate_value()
+#         if cell.multiplier_type == 'word' and cell.active:
+#             multiplier_word = cell.multiplier
+#         if multiplier_word:
+#             value = value * multiplier_word
+#             return value
