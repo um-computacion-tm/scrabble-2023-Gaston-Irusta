@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.0.4] - 2023-09-09
+## Added
+# This version adds the method to calculate the value of the word that the player puts on the board. The method takes
+# the word as a list of cells, it uses the cells' atributes: multiplier type, multiplier value, and the tile with its
+# value. It works as a repetitive method that takes the tiles's value and adds them to the word value variable one by
+# one. It also checks if the word has a letter inside a cell with a word-multiplier, if there's a multiplier, it
+# calculates the word value and multiplies it by the word-multiplier, and if there isn't a multiplier, the methos does
+# the adds and returns the word value. The method is tested and it works correctly.
+
 ## [0.0.3] - 2023-09-08
 ## Added
 # I changed the function responsable of the manege of the turns, now it works with a variable named current_player
