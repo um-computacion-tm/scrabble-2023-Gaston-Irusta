@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.0.5] - 2023-09-10
+## Added
+# This version adds a method to validate if the word that the player wants to put on the board fits inside of it,
+# calculating it from the location of the first letter of the word and the length of it. It takes the coordinates of the
+# first letter and adds the length to the coordinate in x or y, depending if the word's orientation is horizontal or
+# vertical. If the result is higher than 15, which is the board's length, it returns False that means that the word isn't
+# valid, but if the result isn't higher tnah 15, it returns True and means that the word was validated. It works well
+# and runs all the tests correctly.
+
 ## [0.0.4] - 2023-09-09
 ## Added
 # This version adds the method to calculate the value of the word that the player puts on the board. The method takes

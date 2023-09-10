@@ -1,6 +1,7 @@
 from game.board import Board
 from game.player import Player
 from game.models import BagTiles
+from game.cell import Cell
 
 
 class ScrabbleGame:
@@ -20,7 +21,7 @@ class ScrabbleGame:
         else:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]
 
-    # def validate_word(self,word,location,orientation):
+    # def validate_word(self,word: list[Cell],location,orientation):
     #     '''
     #     1- Validar que el usuario tiene esas letras.
     #     2- Validar que la palabra entra en el tablero.
