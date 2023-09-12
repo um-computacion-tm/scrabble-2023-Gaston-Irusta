@@ -10,7 +10,7 @@ class ScrabbleGame:
         self.bag_tiles = BagTiles()
         self.players = []
         for index in range(players_count):
-            self.players.append(Player(id=index))
+            self.players.append(Player(id=index, tiles= self.bag_tiles.take(7)))
         self.current_player = None
 
     def next_turn(self):
@@ -21,11 +21,20 @@ class ScrabbleGame:
         else:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]
 
-    # def validate_word(self,word: list[Cell],location,orientation):
-    #     '''
-    #     1- Validar que el usuario tiene esas letras.
-    #     2- Validar que la palabra entra en el tablero.
-    #     '''
+    def validate_word(self,word,location,orientation,player_tiles):
+            word = word.upper()
+            letters = list(word)
+            valid = True
+            for i in range(len(letters)):
+                if letters[i] not in player_tiles:
+                    return False
+            if valid == True:
+                valid = self.board.validate_word_inside_board(word,location,orientation)
+                if valid == True:
+                    return True
+                else:
+                    return False
+                
     # def get_words():
     #     '''
     #     Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion,orientacion.

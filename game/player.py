@@ -1,5 +1,5 @@
 class Player:
-    def __init__(self, id:int):
+    def __init__(self, id:int, tiles):
         self.id = id
-        self.tiles = None
+        self.tiles = tiles
         
