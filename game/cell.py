@@ -1,6 +1,6 @@
 from game.models import Tile
 class Cell:
-    def __init__(self, multiplier, multiplier_type, letter = None):
+    def __init__(self,multiplier,multiplier_type,letter = None):
         self.multiplier = multiplier
         self.multiplier_type = multiplier_type
         self.letter = letter

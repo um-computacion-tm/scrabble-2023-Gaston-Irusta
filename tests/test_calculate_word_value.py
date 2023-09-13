@@ -1,4 +1,4 @@
-'''import unittest
+import unittest
 from game.cell import Cell
 from game.models import Tile
 from game.calculate_word_value import calculate_word_value
@@ -73,4 +73,4 @@ class TestCalculateWordValue(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()'''
+    unittest.main()
