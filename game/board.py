@@ -5,13 +5,13 @@ class Board:
         self.grid = [[ Cell(1, '') for _ in range(15) ]for _ in range(15)]
 
     def validate_word_inside_board(self, word, location, orientation):
+        len_word = len(word)
         orientation = orientation.upper()
         valid = False
         if orientation == "H":
-            if location[0] + len(word) <= 15 and location[1] + len(word) > 1:
+            if location[0] + len_word <= 15 and location[1] + len_word > 1:
                 valid = True
-        elif orientation == "V":
-            if location[1] + len(word) <= 15 and location[0] + len(word) > 1:
+        if orientation == "V":
+            if location[1] + len_word <= 15 and location[0] + len_word > 1:
                 valid = True
         return valid
-    
