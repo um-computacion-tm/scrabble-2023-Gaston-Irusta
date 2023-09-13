@@ -1,2 +1,1 @@
-# scrabble
-# Gaston Irusta
+# um-computacion-tm-Gaston-Irusta
