@@ -25,14 +25,10 @@ class ScrabbleGame:
             valid = True
             for i in range(len(letters)):
                 if letters[i] not in player_tiles:
-                    return False
+                    valid = False
             if valid == True:
                 valid = self.board.validate_word_inside_board(word,location,orientation)
-                if valid == True:
-                    return True
-                else:
-                    return False
-                
+            return valid
     # def get_words():
     #     '''
     #     Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion,orientacion.
