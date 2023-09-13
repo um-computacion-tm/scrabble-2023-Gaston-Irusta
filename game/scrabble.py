@@ -1,8 +1,6 @@
 from game.board import Board
 from game.player import Player
 from game.models import BagTiles
-from game.cell import Cell
-
 
 class ScrabbleGame:
     def __init__(self, players_count):
@@ -10,7 +8,7 @@ class ScrabbleGame:
         self.bag_tiles = BagTiles()
         self.players = []
         for index in range(players_count):
-            self.players.append(Player(id=index, tiles= self.bag_tiles.take(7)))
+            self.players.append(Player(index, self.bag_tiles.take(7)))
         self.current_player = None
 
     def next_turn(self):

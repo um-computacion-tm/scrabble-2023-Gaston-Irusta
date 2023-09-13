@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.0.7] - 2023-09-12
+## Added
+# I added the file main.py in this version. It will be the responsable of the game to work. It starts the game gretting the players,
+# then asks for the amount of player that will play. When the players are already defined, the board and the menu are shown and the
+# methos next_turn is called for start playing. Ones the current_player is defined, it's asked the player to choose what will do.
+# Depending on the option that choose the player, there will be different instruction to follow. The file isn't finished yet, there
+# are some detailes to work on and some mistakes to fix before testing.
+
 ## [0.0.6] - 2023-09-11
 ## Added
 # In this upgrade I added a method to validate if the word that the player wants to put on the board not only fits on the board,
