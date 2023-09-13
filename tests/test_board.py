@@ -19,7 +19,7 @@ class TestBoard(unittest.TestCase):
         board = Board()
         word = "Universidad"
         location = (6,10)
-        orientation = 'h'
+        orientation = 'H'
         word_is_valid = board.validate_word_inside_board(word,location,orientation)
         self.assertEqual(word_is_valid, False)
 
@@ -27,7 +27,7 @@ class TestBoard(unittest.TestCase):
         board = Board()
         word = 'Terreno'
         location = (9,8)
-        orientation = 'v'
+        orientation = 'V'
         word_is_valid = board.validate_word_inside_board(word,location,orientation)
         self.assertEqual(word_is_valid, True)
 
