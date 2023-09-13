@@ -11,7 +11,7 @@ class Board:
         if orientation == "H":
             if location[0] + len_word <= 15 and location[1] + len_word > 1:
                 valid = True
-        if orientation == "V":
-            if location[1] + len_word <= 15 and location[0] + len_word > 1:
+        elif orientation == "V":
+            if location[0] + len_word > 1 and location[1] + len_word <= 15:
                 valid = True
         return valid
