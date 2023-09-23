@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.0.8] - 2023-09-22
+## Added
+# This time I created a method that checks if the player can really make the word that wants to, and validates if it fits on the board.
+# It compares one by one the letters of the word and the player's letters. If the first letter is in the players letter, the method
+# removes it form the list of the player's letters and continues comparing with the following letter from the word. Now, if the letter
+# is not in the player's letters list, it return False. Then if the player has all the letter correctly, the method cheks if the word
+# fits on the board. The tests run correctly.
+
 ## [0.0.7] - 2023-09-12
 ## Added
 # I added the file main.py in this version. It will be the responsable of the game to work. It starts the game gretting the players,
