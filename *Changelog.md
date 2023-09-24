@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.0.9] - 2023-09-23
+## Added
+# I've added a method in the class Board to check if the board is empty or not with the center cell of the grid, which must be used to
+# start the game because according to the rules you start putting a word on the center of the board. Also, I did a method to put a word
+# on the board crossing with another word. It checks if the cells are empty or not, if they're not empty, the method compares the
+# letter inside the cell with the one that the player wants to put in. If are equal, the method just leaves the letter inside and
+# continues checking the rest of the following cells. This last one has an error that I can't understand very well why it happens, but
+# the tests runs correctly, if I fix the error in the way it should be corrected, the tests don't run correctly anymore. I'll try to
+# fix as soon as posible.
+
 ## [0.0.8] - 2023-09-22
 ## Added
 # This time I created a method that checks if the player can really make the word that wants to, and validates if it fits on the board.
