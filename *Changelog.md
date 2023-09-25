@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.0] - 2023-9-24
+## Added
+# In this version I disabled the method that check if the player can put a word on the board, when a word was already put, because it
+# doesn't work anymore. I change the board constructor to create it with cells with multipliers and multipliers type. I also create
+# some tests to check the cells' multipliers and work correctly. For the next version i'll try to fix the method for the player's word
+# on the board when it has a word on it. 
+
 ## [0.0.9] - 2023-09-23
 ## Added
 # I've added a method in the class Board to check if the board is empty or not with the center cell of the grid, which must be used to
