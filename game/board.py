@@ -77,19 +77,33 @@ class Board:
         return valid
     
     def is_empty(self):
-        if self.grid[7][7].letter is None:
+        if self.grid[7][7].tile is None:
             return True
         else:
             return False
     
-    # def word_not_empty_board(self,word:list[Tile],location,orientation):
-    #     if orientation == 'H':
-    #         for i in range(len(word)):
-    #             if self.grid[int(location[0])][int(location[1]+i)].letter == Tile('',0):
-    #                 self.grid[int(location[0])][int(location[1]+i)].add_letter(word[i])
-    #             elif self.grid[int(location[0])][int(location[1]+i)].letter != Tile('',0):
-    #                 if self.grid[int(location[0])][int(location[1]+i)].letter.letter == word[i].letter:
-    #                     pass
-    #                 else:
-    #                     return False
-    #         return True
+    def word_not_empty_board(self,word:list[Tile],location,orientation):
+        if orientation == 'H':
+            for i in range(len(word)):
+                cell = self.grid[int(location[0])][int(location[1]+i)]
+                tile_to_add = word[i]
+                if cell.tile.letter == '':
+                    self.grid[int(location[0])][int(location[1]+i)].add_tile(tile_to_add)
+                elif cell.tile.letter != '':
+                    if cell.tile.letter == tile_to_add.letter:
+                        pass
+                    else:
+                        return False
+            return True
+        if orientation == 'V':
+            for i in range(len(word)):
+                cell = self.grid[int(location[0]+i)][int(location[1])]
+                tile_to_add = word[i]
+                if cell.tile.letter == '':
+                    self.grid[int(location[0]+i)][int(location[1])].add_tile(tile_to_add)
+                elif cell.tile.letter != '':
+                    if cell.tile.letter == tile_to_add.letter:
+                        pass
+                    else:
+                        return False
+            return True

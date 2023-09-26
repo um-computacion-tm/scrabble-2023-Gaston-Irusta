@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.1] - 2023-09-25
+## Added
+# I finally could fix the method to verify if the player can put a word on the board when a word has been put before. It reads the
+# the tiles of the cells where the player is going to put a tile, if the cell hasn't a tile the method just add the player's tile,
+# and if the cell has a tile, the method compares the letter of the player's tile with the letter of the cell's tile, then if the
+# letters are equal, the method just leaves the tile inside the cell and continues with the next tile. And finally, if the letters
+# aren't equal, the method retunrs False. I made tests to check if it works when the player wants to put a word in horizontal, both
+# cases True and False, or vertical, both cases True and False. Also, I made a method to remove the tile from a cell, just in case it
+# is needed. It's tested too.
+
 ## [0.1.0] - 2023-9-24
 ## Added
 # In this version I disabled the method that check if the player can put a word on the board, when a word was already put, because it
