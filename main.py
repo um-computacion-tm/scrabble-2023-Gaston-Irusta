@@ -7,8 +7,8 @@ def split1():
 def split2():
     print ('_______________________________________________________________________________________________________\n'
            )
-
-def greating():
+    
+def main():
     print("¡¡¡ WELCOME TO SCRABBLE !!!")
     while True:
         try:
@@ -23,8 +23,6 @@ def greating():
     for i in range(len(scrabble_game.players)):
         scrabble_game.players[i].nickname = str(input('Ingrese su apodo: '))
     game_status = True
-
-def main():
     while game_status is True:
         split1()
         scrabble_game.next_turn()
@@ -66,5 +64,4 @@ def main():
             print('Valor invalido. Elegir (1;2;3).')
 
 
-if __name__ == "__main__":
-    main()
+main()
