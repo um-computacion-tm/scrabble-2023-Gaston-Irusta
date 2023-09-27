@@ -9,6 +9,7 @@ class ScrabbleGame:
         self.players = []
         for index in range(players_count):
             self.players.append(Player(index, self.bag_tiles.take(7)))
+            self.players[index].nickname = str(input(f'Ingrese su apodo: '))
         self.current_player = None
 
     def next_turn(self):

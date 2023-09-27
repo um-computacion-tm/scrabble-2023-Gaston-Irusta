@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.3] - 2023-09-27
+## Added
+# In this version I reorganized the code in the main file, so it shows the wellcome messege and defines the players onece, and the
+# starts the bucle where the main menu is shown, so the players can play contantly untill one of them lose, or win, or surrender.
+# I added an atribute to the class player to know well who is the player 1,2,3 and 4, so when the game starts and the number of players
+# is defined, the game asks for the nicknames of the players, so while they are playing, the game calls them by their nicknames so they
+# don't get confused. Also I made the main able to show the tiles of the current player. I have to add the functions to put a word and
+# exchange tiles with the bag tiles in the next version.
+
 ## [0.1.2] - 2023-09-26
 ## Added
 # I created a method to print the board with the multiplier of its cells, and implemented in the main. The main.py file was changed
