@@ -20,21 +20,16 @@ class ScrabbleGame:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]
 
     def validate_word(self,word,location,orientation,player_tiles):
-            word = word.upper()
-            letters = list(word)
-            valid = True
-            for i in range(len(letters)):
-                if letters[i] not in player_tiles:
-                    valid = False
-            if valid == True:
-                valid = self.board.validate_word_inside_board(word,location,orientation)
-            return valid
-    # def get_words():
-    #     '''
-    #     Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion,orientacion.
-    #     Preguntar al usuario, por cada una de esas opciones, las que considera reales.
-    #     '''
-    # def put_words():
-    #     '''
-    #     Modificar el tablero agregando las palabras correctas.
-    #     '''
+        # Hacer lista con letras de palabra y del jugador y comoararlas una por una y si coinciden sacarla de la lista y seguir con la siguiente.
+        valid = True
+        for i in range(len(word)):
+            for x in range(len(player_tiles)):
+                if word[i].letter == player_tiles[x].letter:
+                    del player_tiles[x]
+                    break
+                else:
+                    return False
+        valid = self.board.validate_word_inside_board(word,location,orientation)
+        return valid
+
+    # def put_words(self,word,player_tiles,location,orientation):

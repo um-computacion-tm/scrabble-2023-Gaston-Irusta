@@ -3,6 +3,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.3] - 2023-09-27
+## Added
+# In this version I reorganized the code in the main file, so it shows the wellcome messege and defines the players onece, and the
+# starts the bucle where the main menu is shown, so the players can play contantly untill one of them lose, or win, or surrender.
+# I added an atribute to the class player to know well who is the player 1,2,3 and 4, so when the game starts and the number of players
+# is defined, the game asks for the nicknames of the players, so while they are playing, the game calls them by their nicknames so they
+# don't get confused. Also I made the main able to show the tiles of the current player. I have to add the functions to put a word and
+# exchange tiles with the bag tiles in the next version.
+
+## [0.1.2] - 2023-09-26
+## Added
+# I created a method to print the board with the multiplier of its cells, and implemented in the main. The main.py file was changed
+# a bit, changed the welcome messege, the disposition of the information, and the options to play. I'll try to make it to show the
+# letters of the current player before it shows the options to play. That may be added in the next version. Now, at least, the main
+# is better than before but not perfect yet.
+
+## [0.1.1] - 2023-09-25
+## Added
+# I finally could fix the method to verify if the player can put a word on the board when a word has been put before. It reads the
+# the tiles of the cells where the player is going to put a tile, if the cell hasn't a tile the method just add the player's tile,
+# and if the cell has a tile, the method compares the letter of the player's tile with the letter of the cell's tile, then if the
+# letters are equal, the method just leaves the tile inside the cell and continues with the next tile. And finally, if the letters
+# aren't equal, the method retunrs False. I made tests to check if it works when the player wants to put a word in horizontal, both
+# cases True and False, or vertical, both cases True and False. Also, I made a method to remove the tile from a cell, just in case it
+# is needed. It's tested too.
+
+## [0.1.0] - 2023-9-24
+## Added
+# In this version I disabled the method that check if the player can put a word on the board, when a word was already put, because it
+# doesn't work anymore. I change the board constructor to create it with cells with multipliers and multipliers type. I also create
+# some tests to check the cells' multipliers and work correctly. For the next version i'll try to fix the method for the player's word
+# on the board when it has a word on it. 
+
+## [0.0.9] - 2023-09-23
+## Added
+# I've added a method in the class Board to check if the board is empty or not with the center cell of the grid, which must be used to
+# start the game because according to the rules you start putting a word on the center of the board. Also, I did a method to put a word
+# on the board crossing with another word. It checks if the cells are empty or not, if they're not empty, the method compares the
+# letter inside the cell with the one that the player wants to put in. If are equal, the method just leaves the letter inside and
+# continues checking the rest of the following cells. This last one has an error that I can't understand very well why it happens, but
+# the tests runs correctly, if I fix the error in the way it should be corrected, the tests don't run correctly anymore. I'll try to
+# fix as soon as posible.
+
+## [0.0.8] - 2023-09-22
+## Added
+# This time I created a method that checks if the player can really make the word that wants to, and validates if it fits on the board.
+# It compares one by one the letters of the word and the player's letters. If the first letter is in the players letter, the method
+# removes it form the list of the player's letters and continues comparing with the following letter from the word. Now, if the letter
+# is not in the player's letters list, it return False. Then if the player has all the letter correctly, the method cheks if the word
+# fits on the board. The tests run correctly.
+
 ## [0.0.7] - 2023-09-12
 ## Added
 # I added the file main.py in this version. It will be the responsable of the game to work. It starts the game gretting the players,

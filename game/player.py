@@ -1,5 +1,7 @@
+
+from game.models import Tile
 class Player:
-    def __init__(self, id:int, tiles):
+    def __init__(self, id:int, tiles: list[Tile],nickname = None):
         self.id = id
         self.tiles = tiles
-        
+        self.nickname = nickname

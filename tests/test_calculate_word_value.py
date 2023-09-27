@@ -6,18 +6,18 @@ from game.calculate_word_value import calculate_word_value
 class TestCalculateWordValue(unittest.TestCase):
     def test_calculate_word_value(self):
         word=[
-            Cell(letter=Tile('C', 3), 
+            Cell(tile=Tile('C', 3), 
                 multiplier = 2, 
                 multiplier_type = 'letter'),
-            Cell(letter=Tile('A', 1),
+            Cell(tile=Tile('A', 1),
                  multiplier=1,
                  multiplier_type=''
                  ),
-            Cell(letter=Tile('S', 1),
+            Cell(tile=Tile('S', 1),
                  multiplier= 1,
                  multiplier_type=''
                  ),
-            Cell(letter=Tile('A', 1),
+            Cell(tile=Tile('A', 1),
                  multiplier=1,
                  multiplier_type=''
                  )
@@ -27,18 +27,18 @@ class TestCalculateWordValue(unittest.TestCase):
 
     def test_with_word_multiplier(self):
         word =[
-            Cell(letter=Tile('C', 3), 
+            Cell(tile=Tile('C', 3), 
                  multiplier = 2, 
                  multiplier_type = 'word'),
-            Cell(letter=Tile('A', 1),
+            Cell(tile=Tile('A', 1),
                  multiplier= 1,
                    multiplier_type= ''
                    ),
-            Cell(letter=Tile('S', 1),
+            Cell(tile=Tile('S', 1),
                  multiplier= 1,
                  multiplier_type= ''
                  ),
-            Cell(letter=Tile('A', 1),
+            Cell(tile=Tile('A', 1),
                  multiplier= 1,
                  multiplier_type=''
                  ),
@@ -51,18 +51,18 @@ class TestCalculateWordValue(unittest.TestCase):
 
     def test_with_letter_word_multiplier(self):
         word =[
-            Cell(letter=Tile('C', 3), 
+            Cell(tile=Tile('C', 3), 
                  multiplier = 2, 
                  multiplier_type = 'letter'),
-            Cell(letter=Tile('A', 1),
+            Cell(tile=Tile('A', 1),
                  multiplier=1,
                  multiplier_type=''
                  ),
-            Cell(letter=Tile('S', 1),
+            Cell(tile=Tile('S', 1),
                  multiplier=1,
                  multiplier_type=''
                  ),
-            Cell(letter=Tile('A', 1),
+            Cell(tile=Tile('A', 1),
                  multiplier = 2,
                  multiplier_type = 'word'
                  ),
