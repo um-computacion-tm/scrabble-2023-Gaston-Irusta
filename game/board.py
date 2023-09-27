@@ -66,6 +66,29 @@ class Board:
             self.grid[8][c2] = Cell(2,'letter',Tile('',0))
             c1 += 4
             c2 += 4
+    
+    def print_board(self):
+        boardRow = ''
+        print ('                      ' , ' 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15')
+        for i in range(15):
+            for j in range(15):
+                if self.grid[i][j].tile.letter != '':
+                    boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
+                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
+                    boardRow += '[2W]'
+                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
+                    boardRow += '[3W]'
+                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
+                    boardRow += '[2L]'
+                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
+                    boardRow += '[2L]'
+                else:
+                    boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
+            if (i+1) <= 9:
+                print ('                 ',str(i+1),'  ',boardRow)
+            else:
+                print ('                ',str(i+1),'  ',boardRow)
+            boardRow = ''
 
     def validate_word_inside_board(self, word, location, orientation):
         len_word = len(word)

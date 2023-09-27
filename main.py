@@ -1,26 +1,29 @@
 from game.scrabble import ScrabbleGame
 
+def split():
+    print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'
+           )
+
 def main():
-    print("Bienvenido!")
+    print("¡¡¡ WELCOME TO SCRABBLE !!!")
     while True:
         try:
-            num_players = int(input("Ingrese la cantidad de jugadores."))
+            num_players = int(input("Ingrese la cantidad de jugadores: "))
             if num_players <= 1 or num_players > 4:
                 raise ValueError
             break
         except ValueError:
             print("Valor invalido")
     scrabble_game = ScrabbleGame(players_count = num_players)
-    print("Cantidad de jugadores", len(scrabble_game.players))
-    for _ in range(15):
-        print('|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|')
-    print('\n Menú de juego: \n',
-          '1- Colocar palbra.\n',
-          '2- Ver fichas.\n',
-          '3- Intercambiar ficha.\n')
+    print("Cantidad de jugadores: ", len(scrabble_game.players))
+    split()
     scrabble_game.next_turn()
-    print(f"Turno del jugardor {scrabble_game.current_player}")
-    option = int(input())
+    scrabble_game.board.print_board()
+    split()
+    scrabble_game.next_turn()
+    print(f"Turno del jugardor {scrabble_game.current_player.id}")
+    print('                              ','1- Jugar.','     ','2- Intercambiar fichas.')
+    # option = int(input())
     # if option == 1:
     #     word = input("Ingrese palabra.")
     #     location_x = input("Ingrese posicion X.")
@@ -36,3 +39,4 @@ def main():
     #     '''Buscar esa letra en las fichas del jugador y asignarla a tile para meterla en la bolsa.???'''
     #     scrabble_game.bag_tiles.put(tile)
     #     scrabble_game.bag_tiles.take(1)
+main()

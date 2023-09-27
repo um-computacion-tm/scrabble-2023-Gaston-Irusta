@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.2] - 2023-09-26
+## Added
+# I created a method to print the board with the multiplier of its cells, and implemented in the main. The main.py file was changed
+# a bit, changed the welcome messege, the disposition of the information, and the options to play. I'll try to make it to show the
+# letters of the current player before it shows the options to play. That may be added in the next version. Now, at least, the main
+# is better than before but not perfect yet.
+
 ## [0.1.1] - 2023-09-25
 ## Added
 # I finally could fix the method to verify if the player can put a word on the board when a word has been put before. It reads the
