@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.4] - 2023-09-30
+## Added
+# Today I've finished the option 4, which is for surrender in the game. When the player wants to surrender, the game prints a messege
+# that says the player has surrendered and how many players are remaining. I had to make the game check the number of players that
+# are playing and based in that number decide the instruction that will execute. It has to delete the player that surrendered and
+# update the players' ids so the index of the players list fits with the ids, and the game doesn't fail. Also, I slpit the method
+# next_turn in two different methods, initial_turn and next_turn. 
+
 ## [0.1.3] - 2023-09-27
 ## Added
 # In this version I reorganized the code in the main file, so it shows the wellcome messege and defines the players onece, and the

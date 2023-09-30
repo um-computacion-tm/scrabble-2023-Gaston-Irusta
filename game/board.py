@@ -70,26 +70,28 @@ class Board:
     
     def print_board(self):
         boardRow = ''
-        print ('                      ' , ' 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15')
+        print ('                    ' , ' 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15\n')
         for i in range(15):
             for j in range(15):
                 if self.grid[i][j].tile.letter != '':
                     boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
-                    boardRow += '[2W]'
+                    boardRow += '[2P]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
-                    boardRow += '[3W]'
+                    boardRow += '[3P]'
                 elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
                     boardRow += '[2L]'
                 elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
-                    boardRow += '[2L]'
+                    boardRow += '[3L]'
                 else:
                     boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
             if (i+1) <= 9:
-                print ('                 ',str(i+1),'  ',boardRow)
+                print ('                 ',str(i+1),'',boardRow)
             else:
-                print ('                ',str(i+1),'  ',boardRow)
+                print ('                ',str(i+1),'',boardRow)
             boardRow = ''
+        print('\n')
+
 
     def validate_word_inside_board(self, word, location, orientation):
         len_word = len(word)

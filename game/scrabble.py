@@ -11,10 +11,12 @@ class ScrabbleGame:
             self.players.append(Player(index, self.bag_tiles.take(7)))
         self.current_player = None
 
-    def next_turn(self):
+    def initial_turn(self):
         if self.current_player is None:
             self.current_player = self.players[0]
-        elif id(self.current_player) == id(self.players[(len(self.players)) -1]):
+
+    def next_turn(self):
+        if id(self.current_player) == id(self.players[(len(self.players)) -1]):
             self.current_player = self.players[0]
         else:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]

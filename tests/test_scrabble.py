@@ -16,10 +16,10 @@ class TestScrabbleGame(unittest.TestCase):
         self.assertEqual(len(scrabble_game.players[2].tiles), 7)
         self.assertEqual(len(scrabble_game.bag_tiles.tiles),77)
 
-    def test_next_turn_when_game_is_starting(self):
+    def test_inicial_turn_when_game_is_starting(self):
         scrabble_game = ScrabbleGame(players_count=3)
         scrabble_game.current_player = None
-        scrabble_game.next_turn()
+        scrabble_game.initial_turn()
         self.assertEqual(scrabble_game.current_player, scrabble_game.players[0])
 
     def test_next_turn_when_player_is_not_the_first(self):
