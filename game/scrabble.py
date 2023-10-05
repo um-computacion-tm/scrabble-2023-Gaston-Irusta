@@ -22,16 +22,31 @@ class ScrabbleGame:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]
 
     def validate_word(self,word,location,orientation,player_tiles):
-        # Hacer lista con letras de palabra y del jugador y comoararlas una por una y si coinciden sacarla de la lista y seguir con la siguiente.
-        valid = True
+        word = list(word)
+        n = 0
         for i in range(len(word)):
             for x in range(len(player_tiles)):
-                if word[i].letter == player_tiles[x].letter:
+                print(f'letra palabra {word[i]} y letra jugador {player_tiles[x].letter}')
+                if word[i] == player_tiles[x].letter:
+                    n += 1
                     del player_tiles[x]
                     break
-                else:
-                    return False
-        valid = self.board.validate_word_inside_board(word,location,orientation)
-        return valid
-
+        if n != len(word):
+            return False
+        if self.board.validate_word_inside_board(word,location,orientation) == False:
+            print('La plabra que quiere construir no entra en el tablero.')
+            return False
+        if self.board.is_empty() == False:
+            return self.board.validate_word_board_not_empty(word,location,orientation)
+        
     # def put_words(self,word,player_tiles,location,orientation):
+    #     word = list(word)
+    #     word_tiles = []
+    #     for i in range(len(word)):
+    #         for x in range(len(player_tiles)):
+    #             if word[i] == player_tiles[x].letter:
+    #                 word_tiles.append(player_tiles[x])
+    #                 break
+    #     if self.board.is_empty() == False:
+    #         return self.board.add_word_not_empty_board(word,location,orientation)
+        

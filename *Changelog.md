@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.5] - 2023-10-04
+## Added
+# - Split methods to validate and add words on the board.
+# - Changes in methods to validate words when the player does an input with a word as a string.
+# - Tests for the new methods.
+
 ## [0.1.4] - 2023-09-30
 ## Added
 # Today I've finished the option 4, which is for surrender in the game. When the player wants to surrender, the game prints a messege

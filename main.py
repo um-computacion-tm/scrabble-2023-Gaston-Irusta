@@ -37,11 +37,14 @@ def main():
         print(opcion)
         if opcion == 1:
             print('jugar')
+
         elif opcion == 2:
             print('cambiar fichas')
+
         elif opcion == 3:
             split2()
             scrabble_game.next_turn()
+
         elif opcion == 4 and len(scrabble_game.players) == 2:
             perdedor = scrabble_game.current_player.nickname
             scrabble_game.next_turn()
@@ -49,6 +52,7 @@ def main():
             print(f'{perdedor} se ha rendido. El ganador es {ganador}')
             split2()
             break
+
         elif opcion == 4 and len(scrabble_game.players) > 2:
             if scrabble_game.current_player.id == 0:
                 print(f'{scrabble_game.current_player.nickname} se ha rendido. Quedan {(len(scrabble_game.players))-1} jugadores.')
@@ -56,12 +60,14 @@ def main():
                 del scrabble_game.players[0]  
                 for i in range(len(scrabble_game.players)):
                     scrabble_game.players[i].id -= 1
+
             elif 0 < scrabble_game.current_player.id < len(scrabble_game.players) and len(scrabble_game.players) == 3:
                 print(f'{scrabble_game.current_player.nickname} se ha rendido. Quedan {(len(scrabble_game.players))-1} jugadores.')
                 perdedor = scrabble_game.current_player
                 scrabble_game.next_turn()
                 del scrabble_game.players[perdedor.id]
                 scrabble_game.current_player.id -= 1
+
             elif 0 < scrabble_game.current_player.id < len(scrabble_game.players) and len(scrabble_game.players) == 4:
                 print(f'{scrabble_game.current_player.nickname} se ha rendido. Quedan {(len(scrabble_game.players))-1} jugadores.')
                 perdedor = scrabble_game.current_player
@@ -72,6 +78,7 @@ def main():
                     scrabble_game.players[2].id = 2
                 if perdedor.id == 2:
                     scrabble_game.players[2].id = 2
+
             elif scrabble_game.current_player.id == len(scrabble_game.players):
                 print(f'{scrabble_game.current_player.nickname} se ha rendido. Quedan {(len(scrabble_game.players))-1} jugadores.')
                 perdedor = scrabble_game.current_player
@@ -81,5 +88,5 @@ def main():
         elif opcion > 4:
             print('Valor invalido. Elegir (1;2;3).')
 
-
-main()
+if __name__ == '__main__':
+    main()
