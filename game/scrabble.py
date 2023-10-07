@@ -26,27 +26,31 @@ class ScrabbleGame:
         n = 0
         for i in range(len(word)):
             for x in range(len(player_tiles)):
-                print(f'letra palabra {word[i]} y letra jugador {player_tiles[x].letter}')
                 if word[i] == player_tiles[x].letter:
                     n += 1
                     del player_tiles[x]
                     break
         if n != len(word):
             return False
-        if self.board.validate_word_inside_board(word,location,orientation) == False:
-            print('La plabra que quiere construir no entra en el tablero.')
+        if self.board.validate_word_inside_board(word,location,orientation) == True:
+            if self.board.is_empty == False:
+                if self.board.validate_word_board_not_empty(word,location,orientation) == True:
+                    return True
+                else:
+                    return False
+            return True
+        else:
             return False
-        if self.board.is_empty() == False:
-            return self.board.validate_word_board_not_empty(word,location,orientation)
-        
-    # def put_words(self,word,player_tiles,location,orientation):
-    #     word = list(word)
-    #     word_tiles = []
-    #     for i in range(len(word)):
-    #         for x in range(len(player_tiles)):
-    #             if word[i] == player_tiles[x].letter:
-    #                 word_tiles.append(player_tiles[x])
-    #                 break
-    #     if self.board.is_empty() == False:
-    #         return self.board.add_word_not_empty_board(word,location,orientation)
-        
+
+    def put_word(self,word,location,orientation,player_tiles):
+        word = list(word)
+        word_tiles = []
+        for i in range(len(word)):
+            for x in range(len(player_tiles)):
+                if word[i] == player_tiles[x].letter:
+                    word_tiles.append(player_tiles[x])
+                    break
+        if self.board.is_empty() == True:
+            self.board.add_word_empty_board(word_tiles,location,orientation)
+        elif self.board.is_empty() == False:
+            self.board.add_word_not_empty_board(word_tiles,location,orientation)

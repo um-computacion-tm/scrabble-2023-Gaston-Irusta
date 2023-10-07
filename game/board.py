@@ -118,7 +118,7 @@ class Board:
                     if self.grid[int(location[0])][int(location[1]+i)].tile.letter == word[i]:
                         pass
                     else:
-                        print('La palabra que quiere poner no coincide con las letras de las otras palabras del atblero.')
+                        print('La palabra que quiere poner no coincide con las letras de las otras palabras del tablero.')
                         return False
             return True
         elif orientation == 'V':
@@ -129,7 +129,7 @@ class Board:
                     if self.grid[int(location[0]+i)][int(location[1])].tile.letter == word[i]:
                         pass
                     else:
-                        print('La palabra que quiere poner no coincide con las letras de las otras palabras del atblero.')
+                        print('La palabra que quiere poner no coincide con las letras de las otras palabras del tablero.')
                         return False
             return True
 
