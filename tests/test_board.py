@@ -50,7 +50,6 @@ class TestBoard(unittest.TestCase):
 
     def test_board_is_empty_True(self):
         board = Board()
-        board.grid[7][7].tile = Tile('',0)
         empty = board.is_empty()
         self.assertEqual(empty,True)
 

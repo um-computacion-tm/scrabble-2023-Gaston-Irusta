@@ -15,7 +15,7 @@ class Board:
         # Multiplier x2 word
         for i in range(1,5):
             self.grid[i][i] = Cell(2,'word',Tile('',0))
-        self.grid[7][7] = Cell(2,'word',Tile('',0))
+        self.grid[7][7] = Cell(2,'word',None)
         for i in range(10,14):
             self.grid[i][i] = Cell(2,'word',Tile('',0))
         r = 13
@@ -103,7 +103,7 @@ class Board:
         return valid
     
     def is_empty(self):
-        if self.grid[7][7].tile.value == 0:
+        if self.grid[7][7].tile is None:
             return True
         else:
             return False

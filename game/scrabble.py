@@ -33,14 +33,13 @@ class ScrabbleGame:
         if n != len(word):
             return False
         if self.board.validate_word_inside_board(word,location,orientation) == True:
-            if self.board.is_empty == False:
-                if self.board.validate_word_board_not_empty(word,location,orientation) == True:
-                    return True
-                else:
-                    return False
-            return True
+            pass
         else:
             return False
+        if self.board.is_empty() == False:
+            return self.board.validate_word_board_not_empty(word,location,orientation) == True
+        else:
+            return True
 
     def put_word(self,word,location,orientation,player_tiles):
         word = list(word)

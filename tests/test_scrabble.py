@@ -93,29 +93,7 @@ class TestScrabbleGame(unittest.TestCase):
         valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
         self.assertEqual(valid_word, False)
 
-    # def test_validate_word_False_2(self):
-    #     scrabble_game = ScrabbleGame(players_count= 3)
-    #     scrabble_game.current_player = scrabble_game.players[2]
-    #     scrabble_game.current_player.tiles = [
-    #         Tile('C',3),
-    #         Tile('O',1),
-    #         Tile('S',1),
-    #         Tile('T',1),
-    #         Tile('A',1),
-    #         Tile('Y',4),
-    #         Tile('U',1),
-    #     ]
-    #     scrabble_game.board.grid[5][7].add_tile(Tile('F',4))
-    #     scrabble_game.board.grid[6][7].add_tile(Tile('O',1))
-    #     scrabble_game.board.grid[7][7].add_tile(Tile('F',4))
-    #     scrabble_game.board.grid[8][7].add_tile(Tile('O',1))
-    #     word = 'COSTA'
-    #     location = (7,7)
-    #     orientation = 'H'
-    #     valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
-    #     self.assertEqual(valid_word, False)
-
-    def test_validate_word_False_3(self):
+    def test_validate_word_False_2(self):
         scrabble_game = ScrabbleGame(players_count= 3)
         scrabble_game.current_player = scrabble_game.players[2]
         scrabble_game.current_player.tiles = [
@@ -132,8 +110,30 @@ class TestScrabbleGame(unittest.TestCase):
         orientation = 'V'
         valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
         self.assertEqual(valid_word, False)
-    
-    def test_put_word(self):
+  
+    def test_validate_word_False_3(self):
+        scrabble_game = ScrabbleGame(players_count= 3)
+        scrabble_game.current_player = scrabble_game.players[2]
+        scrabble_game.current_player.tiles = [
+            Tile('C',3),
+            Tile('O',1),
+            Tile('S',1),
+            Tile('T',1),
+            Tile('A',1),
+            Tile('Y',4),
+            Tile('U',1),
+        ]
+        scrabble_game.board.grid[5][7].add_tile(Tile('F',4))
+        scrabble_game.board.grid[6][7].add_tile(Tile('O',1))
+        scrabble_game.board.grid[7][7].add_tile(Tile('F',4))
+        scrabble_game.board.grid[8][7].add_tile(Tile('O',1))
+        word = 'COSTA'
+        location = (7,6)
+        orientation = 'H'
+        valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
+        self.assertEqual(valid_word, False)
+  
+    def test_put_word_empty(self):
         scrabble_game = ScrabbleGame(players_count=2)
         scrabble_game.current_player = scrabble_game.players[0]
         scrabble_game.current_player.tiles = [
@@ -149,8 +149,40 @@ class TestScrabbleGame(unittest.TestCase):
         location = (7,3)
         orientation = 'H'
         scrabble_game.put_word(word,location,orientation,scrabble_game.current_player.tiles)
-        print(scrabble_game.board.grid[7][7].tile.letter)
+        self.assertEqual(scrabble_game.board.grid[7][3].tile.letter,'C')
+        self.assertEqual(scrabble_game.board.grid[7][4].tile.letter,'O')
+        self.assertEqual(scrabble_game.board.grid[7][5].tile.letter,'R')
+        self.assertEqual(scrabble_game.board.grid[7][6].tile.letter,'C')
         self.assertEqual(scrabble_game.board.grid[7][7].tile.letter,'H')
+        self.assertEqual(scrabble_game.board.grid[7][8].tile.letter,'O')
+
+    def test_put_word_not_empty(self):
+        scrabble_game = ScrabbleGame(players_count=2)
+        scrabble_game.current_player = scrabble_game.players[1]
+        scrabble_game.current_player.tiles = [
+            Tile('A',1),
+            Tile('S',1),
+            Tile('M',3),
+            Tile('L',1),
+            Tile('O',1),
+            Tile('L',1),
+            Tile('O',1)
+        ]
+        scrabble_game.board.grid[7][5].add_tile(Tile('R',1))
+        scrabble_game.board.grid[7][6].add_tile(Tile('A',1))
+        scrabble_game.board.grid[7][7].add_tile(Tile('M',3))
+        scrabble_game.board.grid[7][8].add_tile(Tile('O',1))
+        scrabble_game.board.grid[7][9].add_tile(Tile('S',1))
+        word = 'LOMA'
+        location = (5,7)
+        orientation = 'V'
+        scrabble_game.put_word(word,location,orientation,scrabble_game.current_player.tiles)
+        self.assertEqual(scrabble_game.board.grid[5][7].tile.letter,'L')
+        self.assertEqual(scrabble_game.board.grid[6][7].tile.letter,'O')
+        self.assertEqual(scrabble_game.board.grid[7][7].tile.letter,'M')
+        self.assertEqual(scrabble_game.board.grid[8][7].tile.letter,'A')
+        
+
 
 if __name__ == '__main__':
     unittest.main()

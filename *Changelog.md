@@ -3,19 +3,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
-## [0.1.6] - 2023-10-06
+## [0.0.17] - 2023-10-07
+## Added
+# In this version I finished the method put word and finally fix the validate word, I made tests to check if all the posible variables
+# are tested, with the method validate word and the two posible cases for the method put word. In the following version I'll be adding
+# the score for each player in the game, I have to adapt the calculate word value to work well.
+
+## [0.0.16] - 2023-10-06
 ## Added
 # Today I made the methot to put a word, I've made one test and works correctly and some to tests the method to validate the words, 
 # which I changed a little bit and now there is one test that it's not working. I'll do some more tests for the method to validate and
 # put words. It's not done yet but tomorrow it will be finished.
 
-## [0.1.5] - 2023-10-04
+## [0.0.15] - 2023-10-04
 ## Added
 # - Split methods to validate and add words on the board.
 # - Changes in methods to validate words when the player does an input with a word as a string.
 # - Tests for the new methods.
 
-## [0.1.4] - 2023-09-30
+## [0.0.14] - 2023-09-30
 ## Added
 # Today I've finished the option 4, which is for surrender in the game. When the player wants to surrender, the game prints a messege
 # that says the player has surrendered and how many players are remaining. I had to make the game check the number of players that
@@ -23,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # update the players' ids so the index of the players list fits with the ids, and the game doesn't fail. Also, I slpit the method
 # next_turn in two different methods, initial_turn and next_turn. 
 
-## [0.1.3] - 2023-09-27
+## [0.0.13] - 2023-09-27
 ## Added
 # In this version I reorganized the code in the main file, so it shows the wellcome messege and defines the players onece, and the
 # starts the bucle where the main menu is shown, so the players can play contantly untill one of them lose, or win, or surrender.
@@ -32,14 +38,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # don't get confused. Also I made the main able to show the tiles of the current player. I have to add the functions to put a word and
 # exchange tiles with the bag tiles in the next version.
 
-## [0.1.2] - 2023-09-26
+## [0.0.12] - 2023-09-26
 ## Added
 # I created a method to print the board with the multiplier of its cells, and implemented in the main. The main.py file was changed
 # a bit, changed the welcome messege, the disposition of the information, and the options to play. I'll try to make it to show the
 # letters of the current player before it shows the options to play. That may be added in the next version. Now, at least, the main
 # is better than before but not perfect yet.
 
-## [0.1.1] - 2023-09-25
+## [0.0.11] - 2023-09-25
 ## Added
 # I finally could fix the method to verify if the player can put a word on the board when a word has been put before. It reads the
 # the tiles of the cells where the player is going to put a tile, if the cell hasn't a tile the method just add the player's tile,
@@ -49,14 +55,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # cases True and False, or vertical, both cases True and False. Also, I made a method to remove the tile from a cell, just in case it
 # is needed. It's tested too.
 
-## [0.1.0] - 2023-9-24
+## [0.0.10] - 2023-9-24
 ## Added
 # In this version I disabled the method that check if the player can put a word on the board, when a word was already put, because it
 # doesn't work anymore. I change the board constructor to create it with cells with multipliers and multipliers type. I also create
 # some tests to check the cells' multipliers and work correctly. For the next version i'll try to fix the method for the player's word
 # on the board when it has a word on it. 
 
-## [0.0.9] - 2023-09-23
+## [0.0.09] - 2023-09-23
 ## Added
 # I've added a method in the class Board to check if the board is empty or not with the center cell of the grid, which must be used to
 # start the game because according to the rules you start putting a word on the center of the board. Also, I did a method to put a word
@@ -66,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # the tests runs correctly, if I fix the error in the way it should be corrected, the tests don't run correctly anymore. I'll try to
 # fix as soon as posible.
 
-## [0.0.8] - 2023-09-22
+## [0.0.08] - 2023-09-22
 ## Added
 # This time I created a method that checks if the player can really make the word that wants to, and validates if it fits on the board.
 # It compares one by one the letters of the word and the player's letters. If the first letter is in the players letter, the method
@@ -74,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # is not in the player's letters list, it return False. Then if the player has all the letter correctly, the method cheks if the word
 # fits on the board. The tests run correctly.
 
-## [0.0.7] - 2023-09-12
+## [0.0.07] - 2023-09-12
 ## Added
 # I added the file main.py in this version. It will be the responsable of the game to work. It starts the game gretting the players,
 # then asks for the amount of player that will play. When the players are already defined, the board and the menu are shown and the
@@ -82,12 +88,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Depending on the option that choose the player, there will be different instruction to follow. The file isn't finished yet, there
 # are some detailes to work on and some mistakes to fix before testing.
 
-## [0.0.6] - 2023-09-11
+## [0.0.06] - 2023-09-11
 ## Added
 # In this upgrade I added a method to validate if the word that the player wants to put on the board not only fits on the board,
 # also checks if the player has the tiles to form that word. I made the the test and runs correctly.
 
-## [0.0.5] - 2023-09-10
+## [0.0.05] - 2023-09-10
 ## Added
 # This version adds a method to validate if the word that the player wants to put on the board fits inside of it,
 # calculating it from the location of the first letter of the word and the length of it. It takes the coordinates of the
@@ -96,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # valid, but if the result isn't higher tnah 15, it returns True and means that the word was validated. It works well
 # and runs all the tests correctly.
 
-## [0.0.4] - 2023-09-09
+## [0.0.04] - 2023-09-09
 ## Added
 # This version adds the method to calculate the value of the word that the player puts on the board. The method takes
 # the word as a list of cells, it uses the cells' atributes: multiplier type, multiplier value, and the tile with its
@@ -105,7 +111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # calculates the word value and multiplies it by the word-multiplier, and if there isn't a multiplier, the methos does
 # the adds and returns the word value. The method is tested and it works correctly.
 
-## [0.0.3] - 2023-09-08
+## [0.0.03] - 2023-09-08
 ## Added
 # I changed the function responsable of the manege of the turns, now it works with a variable named current_player
 # without a defined value. When the game begings, it's call a method called next_turn to check if that variable is not
@@ -114,7 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # player, it changes it with the second, and if it's the last player of the list, it changes it with the first player
 # again. I also made the tests to check if it works correctly.
 
-## [0.0.2] - 2023-09-01
+## [0.0.02] - 2023-09-01
 ## Added
 # In this version I've added a función with a variable to change the playing turns for the players in function of the
 # total number of players. The variable begins with the value 1, then when the player finishes its turn, the program
