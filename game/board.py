@@ -3,7 +3,7 @@ from game.models import Tile
 
 class Board:
     def __init__(self):
-        self.grid = [[ Cell(1, '',Tile('',0)) for _ in range(15) ]for _ in range(15)]
+        self.grid = [[ Cell(1,'',Tile('',0)) for _ in range(15) ]for _ in range(15)]
         # Multiplier x3 word
         c = 0
         for _ in range(3):
@@ -70,11 +70,13 @@ class Board:
     
     def print_board(self):
         boardRow = ''
-        print ('                    ' , ' 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15\n')
+        print ('                    ' , ' 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14\n')
         for i in range(15):
             for j in range(15):
-                if self.grid[i][j].tile.letter != '':
+                if i != 7 and j != 7 and self.grid[i][j].tile.letter != '':
                     boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
+                elif i == 7 and j == 7:
+                    boardRow += '[2P]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
                     boardRow += '[2P]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
@@ -85,10 +87,10 @@ class Board:
                     boardRow += '[3L]'
                 else:
                     boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
-            if (i+1) <= 9:
-                print ('                ',str(i+1),' ',boardRow)
+            if (i+1) <= 10:
+                print ('                ',str(i),' ',boardRow)
             else:
-                print ('               ',str(i+1),' ',boardRow)
+                print ('               ',str(i),' ',boardRow)
             boardRow = ''
         print('\n')
 

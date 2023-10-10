@@ -1,9 +1,11 @@
 from game.board import Board
 from game.player import Player
 from game.models import BagTiles
+from game.tools import Tools
 
 class ScrabbleGame:
     def __init__(self, players_count):
+        self.tools = Tools()
         self.board = Board()
         self.bag_tiles = BagTiles()
         self.players = []
@@ -20,6 +22,20 @@ class ScrabbleGame:
             self.current_player = self.players[0]
         else:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]
+
+    def list_cells(self,word,location,orientation):
+        cells = []
+        if orientation == 'H':
+            for i in range(len(word)):
+                cells.append(self.board.grid[location[0]][location[1]+i])
+        elif orientation == 'V':
+            for i in range(len(word)):
+                cells.append(self.board.grid[location[0]+i][location[1]])
+        return cells
+
+    def score_sum(self,word,location,orientation):
+        cells = self.list_cells(word,location,orientation)
+        self.current_player.score = self.current_player.score + self.tools.calculate_word_value(cells)
 
     def validate_word(self,word,location,orientation,player_tiles):
         word = list(word)

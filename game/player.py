@@ -6,4 +6,3 @@ class Player:
         self.tiles = tiles
         self.nickname = nickname
         self.score = score
-    
