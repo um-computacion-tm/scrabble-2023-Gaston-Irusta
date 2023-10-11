@@ -50,20 +50,98 @@ class TestBoard(unittest.TestCase):
 
     def test_board_is_empty_True(self):
         board = Board()
-        board.grid[7][7].tile = None
         empty = board.is_empty()
         self.assertEqual(empty,True)
+
+    def test_board_is_empty_False(self):
+        board = Board()
         board.grid[7][7].add_tile(Tile('A',1))
         empty = board.is_empty()
         self.assertEqual(empty, False)
 
-    def test_place_word_not_empty_board_H_True(self):
+    def test_validate_word_board_not_empty_H_True(self):
+        board = Board()
+        board.grid[7][7].add_tile(Tile('C', 1))
+        board.grid[8][7].add_tile(Tile('A', 1)) 
+        board.grid[9][7].add_tile(Tile('S', 1)) 
+        board.grid[10][7].add_tile(Tile('A', 1))
+        word = 'FACULTAD'
+        location = (8,6)
+        orientation = 'H'
+        word_is_valid = board.validate_word_board_not_empty(word,location,orientation)
+        self.assertEqual(word_is_valid,True)
+
+    def test_validate_word_board_not_empty_H_False(self):
+        board = Board()
+        board.grid[7][7].add_tile(Tile('C', 1))
+        board.grid[8][7].add_tile(Tile('O', 1)) 
+        board.grid[9][7].add_tile(Tile('S', 1)) 
+        board.grid[10][7].add_tile(Tile('A', 1))
+        word = 'FACULTAD'
+        location = (8,6)
+        orientation = 'H'
+        word_is_valid  = board.validate_word_board_not_empty(word,location,orientation)
+        self.assertEqual(word_is_valid,False)
+
+    def test_validate_word_board_not_empty_V_True(self):
+        board = Board()
+        board.grid[7][7].add_tile(Tile('L', 1))
+        board.grid[7][8].add_tile(Tile('O', 1)) 
+        board.grid[7][9].add_tile(Tile('M', 1)) 
+        board.grid[7][10].add_tile(Tile('A', 1))
+        word = 'TORNADO'
+        location = (6,8)
+        orientation = 'V'
+        word_is_valid = board.validate_word_board_not_empty(word,location,orientation)
+        self.assertEqual(word_is_valid,True)
+
+    def test_validate_word_board_not_empty_V_False(self):
+        board = Board()
+        board.grid[7][7].add_tile(Tile('L', 1))
+        board.grid[7][8].add_tile(Tile('A', 1)) 
+        board.grid[7][9].add_tile(Tile('N', 1)) 
+        board.grid[7][10].add_tile(Tile('A', 1))
+        word = 'PALOMA'
+        location = (5,8)
+        orientation = 'V'
+        word_is_valid = board.validate_word_board_not_empty(word,location,orientation)
+        self.assertEqual(word_is_valid,False)
+
+    def test_add_word_empty_board_H(self):
+        board = Board()
+        word_tiles = [
+            Tile('A',1),
+            Tile('M',1),
+            Tile('A',1),
+            Tile('C',1),
+            Tile('A',1)
+        ]
+        location = (7,3)
+        orientation = 'H'
+        word_is_added = board.add_word_empty_board(word_tiles,location,orientation)
+        self.assertEqual(word_is_added,True)
+        
+    def test_add_word_empty_board_V(self):
+        board = Board()
+        word_tiles = [
+            Tile('A',1),
+            Tile('T',1),
+            Tile('R',1),
+            Tile('A',1),
+            Tile('S',1)
+        ]
+        location = (3,7)
+        orientation = 'V'
+        word_is_added = board.add_word_empty_board(word_tiles,location,orientation)
+        self.assertEqual(word_is_added,True)
+
+    def test_add_word_not_empty_board_H_True(self):
         board = Board()
         board.grid[7][7].add_tile(Tile('C', 1))
         board.grid[8][7].add_tile(Tile('A', 1)) 
         board.grid[9][7].add_tile(Tile('S', 1)) 
         board.grid[10][7].add_tile(Tile('A', 1)) 
-        word = [
+        word_tiles = [
             Tile('F',4),
             Tile('A',1),
             Tile('C',1),
@@ -75,18 +153,18 @@ class TestBoard(unittest.TestCase):
         ]
         location = (8, 6)
         orientation = "H"
-        word_is_valid_inside = board.validate_word_inside_board(word, location, orientation)
+        word_is_valid_inside = board.validate_word_inside_board(word_tiles, location, orientation)
         self.assertEqual(word_is_valid_inside,True)
-        word_is_valid = board.word_not_empty_board(word,location,orientation)
-        self.assertEqual(word_is_valid,True)
+        word_is_added = board.add_word_not_empty_board(word_tiles,location,orientation)
+        self.assertEqual(word_is_added,True)
     
-    def test_place_word_not_empty_board_H_False(self):
+    def test_add_word_not_empty_board_H_False(self):
         board = Board()
         board.grid[7][7].add_tile(Tile('C', 1))
         board.grid[8][7].add_tile(Tile('O', 1)) 
         board.grid[9][7].add_tile(Tile('S', 1)) 
         board.grid[10][7].add_tile(Tile('A', 1)) 
-        word = [
+        word_tiles = [
             Tile('F',4),
             Tile('A',1),
             Tile('C',1),
@@ -98,18 +176,18 @@ class TestBoard(unittest.TestCase):
         ]
         location = (8, 6)
         orientation = "H"
-        word_is_valid_inside = board.validate_word_inside_board(word, location, orientation)
+        word_is_valid_inside = board.validate_word_inside_board(word_tiles, location, orientation)
         self.assertEqual(word_is_valid_inside,True)
-        word_is_valid = board.word_not_empty_board(word,location,orientation)
-        self.assertEqual(word_is_valid,False)
+        word_is_added = board.add_word_not_empty_board(word_tiles,location,orientation)
+        self.assertEqual(word_is_added,False)
 
-    def test_place_word_not_empty_board_V_True(self):
+    def test_add__word_not_empty_board_V_True(self):
         board = Board()
         board.grid[7][7].add_tile(Tile('L', 1))
         board.grid[7][8].add_tile(Tile('O', 1)) 
         board.grid[7][9].add_tile(Tile('M', 1)) 
         board.grid[7][10].add_tile(Tile('A', 1)) 
-        word = [
+        word_tiles = [
             Tile('T',1),
             Tile('O',1),
             Tile('R',1),
@@ -120,18 +198,18 @@ class TestBoard(unittest.TestCase):
         ]
         location = (6, 8)
         orientation = "V"
-        word_is_valid_inside = board.validate_word_inside_board(word, location, orientation)
+        word_is_valid_inside = board.validate_word_inside_board(word_tiles, location, orientation)
         self.assertEqual(word_is_valid_inside,True)
-        word_is_valid = board.word_not_empty_board(word,location,orientation)
-        self.assertEqual(word_is_valid,True)
+        word_is_added = board.add_word_not_empty_board(word_tiles,location,orientation)
+        self.assertEqual(word_is_added,True)
     
-    def test_place_word_not_empty_board_V_False(self):
+    def test_add_word_not_empty_board_V_False(self):
         board = Board()
         board.grid[7][7].add_tile(Tile('L', 1))
         board.grid[7][8].add_tile(Tile('A', 1)) 
         board.grid[7][9].add_tile(Tile('N', 1)) 
         board.grid[7][10].add_tile(Tile('A', 1)) 
-        word = [
+        word_tiles = [
             Tile('P',3),
             Tile('A',1),
             Tile('L',1),
@@ -141,10 +219,10 @@ class TestBoard(unittest.TestCase):
         ]
         location = (5, 8)
         orientation = "V"
-        word_is_valid_inside = board.validate_word_inside_board(word, location, orientation)
+        word_is_valid_inside = board.validate_word_inside_board(word_tiles, location, orientation)
         self.assertEqual(word_is_valid_inside,True)
-        word_is_valid = board.word_not_empty_board(word,location,orientation)
-        self.assertEqual(word_is_valid,False)
+        word_is_added = board.add_word_not_empty_board(word_tiles,location,orientation)
+        self.assertEqual(word_is_added,False)
 
 if __name__ == '__main__':
     unittest.main()

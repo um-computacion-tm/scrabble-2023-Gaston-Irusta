@@ -1,10 +1,14 @@
 import unittest
 from game.cell import Cell
 from game.models import Tile
-from game.calculate_word_value import calculate_word_value
-
+from game.tools import Tools
+from game.board import Board
 class TestCalculateWordValue(unittest.TestCase):
+    
+
+    
     def test_calculate_word_value(self):
+        tools = Tools()
         word=[
             Cell(tile=Tile('C', 3), 
                 multiplier = 2, 
@@ -22,10 +26,11 @@ class TestCalculateWordValue(unittest.TestCase):
                  multiplier_type=''
                  )
          ]
-        value = calculate_word_value(word)
+        value = tools.calculate_word_value(word)
         self.assertEqual(value,9)
 
     def test_with_word_multiplier(self):
+        tools = Tools()
         word =[
             Cell(tile=Tile('C', 3), 
                  multiplier = 2, 
@@ -46,10 +51,11 @@ class TestCalculateWordValue(unittest.TestCase):
         for index in range(len(word)):
             word[index].active = False
 
-        value = calculate_word_value(word)
+        value = tools.calculate_word_value(word)
         self.assertEqual(value,12)
 
     def test_with_letter_word_multiplier(self):
+        tools = Tools()
         word =[
             Cell(tile=Tile('C', 3), 
                  multiplier = 2, 
@@ -68,7 +74,7 @@ class TestCalculateWordValue(unittest.TestCase):
                  ),
 
         ]
-        value = calculate_word_value(word)
+        value = tools.calculate_word_value(word)
         self.assertEqual(value,18)
 
 

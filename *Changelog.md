@@ -3,6 +3,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.9] - 2023-10-10
+## Added
+# Today I worked in the option "Play" of the main menu. I make ir "work" well, I have just an issue with the part that adds the tile
+# to the board because the method validates is modifying the list of tiles of the current player before the method put word can be
+# called. I'll try to fix it to the following version, and the make the tests with patch.(I don't remerber very well how the patch
+# works, so I will do the tests later, sorry).
+
+## [0.1.8] - 2023-10-09
+## Added
+# Today I've done the methos to upload the score of every player so I can use it when the player's turn ends. I had to make a method
+# in the class ScrabbleGame to build a list of the cells whith the tiles that forms the word so the game can calculate the word value.
+# Now with that list of cells, the game can execute the method calculate_word_value and update the score of the player that had just
+# finisshed its turn. I made tests to verify if the method that lists the cells and the method to update the score works correctly,
+# and furtunately they do.
+
+## [0.1.7] - 2023-10-07
+## Added
+# In this version I finished the method put word and finally fix the validate word, I made tests to check if all the posible variables
+# are tested, with the method validate word and the two posible cases for the method put word. In the following version I'll be adding
+# the score for each player in the game, I have to adapt the calculate word value to work well.
+
+## [0.1.6] - 2023-10-06
+## Added
+# Today I made the methot to put a word, I've made one test and works correctly and some to tests the method to validate the words, 
+# which I changed a little bit and now there is one test that it's not working. I'll do some more tests for the method to validate and
+# put words. It's not done yet but tomorrow it will be finished.
+
+## [0.1.5] - 2023-10-04
+## Added
+# - Split methods to validate and add words on the board.
+# - Changes in methods to validate words when the player does an input with a word as a string.
+# - Tests for the new methods.
+
+## [0.1.4] - 2023-09-30
+## Added
+# Today I've finished the option 4, which is for surrender in the game. When the player wants to surrender, the game prints a messege
+# that says the player has surrendered and how many players are remaining. I had to make the game check the number of players that
+# are playing and based in that number decide the instruction that will execute. It has to delete the player that surrendered and
+# update the players' ids so the index of the players list fits with the ids, and the game doesn't fail. Also, I slpit the method
+# next_turn in two different methods, initial_turn and next_turn. 
+
 ## [0.1.3] - 2023-09-27
 ## Added
 # In this version I reorganized the code in the main file, so it shows the wellcome messege and defines the players onece, and the

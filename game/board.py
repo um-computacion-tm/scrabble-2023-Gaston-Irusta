@@ -3,7 +3,7 @@ from game.models import Tile
 
 class Board:
     def __init__(self):
-        self.grid = [[ Cell(1, '',Tile('',0)) for _ in range(15) ]for _ in range(15)]
+        self.grid = [[ Cell(1,'',Tile('',0)) for _ in range(15) ]for _ in range(15)]
         # Multiplier x3 word
         c = 0
         for _ in range(3):
@@ -70,26 +70,30 @@ class Board:
     
     def print_board(self):
         boardRow = ''
-        print ('                      ' , ' 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15')
+        print ('                    ' , ' 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14\n')
         for i in range(15):
             for j in range(15):
                 if self.grid[i][j].tile.letter != '':
-                    boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
+                    boardRow += '[ ' + self.grid[i][j].tile.letter + ']'
+                elif i == 7 and j == 7:
+                    boardRow += '[2P]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
-                    boardRow += '[2W]'
+                    boardRow += '[2P]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
-                    boardRow += '[3W]'
+                    boardRow += '[3P]'
                 elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
                     boardRow += '[2L]'
                 elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
-                    boardRow += '[2L]'
+                    boardRow += '[3L]'
                 else:
                     boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
-            if (i+1) <= 9:
-                print ('                 ',str(i+1),'  ',boardRow)
+            if (i+1) <= 10:
+                print ('                ',str(i),' ',boardRow)
             else:
-                print ('                ',str(i+1),'  ',boardRow)
+                print ('               ',str(i),' ',boardRow)
             boardRow = ''
+        print('\n')
+
 
     def validate_word_inside_board(self, word, location, orientation):
         len_word = len(word)
@@ -101,32 +105,62 @@ class Board:
         return valid
     
     def is_empty(self):
-        if self.grid[7][7].tile is None:
+        if self.grid[7][7].tile.letter == '':
             return True
         else:
             return False
     
-    def word_not_empty_board(self,word:list[Tile],location,orientation):
+    def validate_word_board_not_empty(self,word,location,orientation):
+        word = list(word)
         if orientation == 'H':
             for i in range(len(word)):
-                cell = self.grid[int(location[0])][int(location[1]+i)]
-                tile_to_add = word[i]
-                if cell.tile.letter == '':
-                    self.grid[int(location[0])][int(location[1]+i)].add_tile(tile_to_add)
-                elif cell.tile.letter != '':
-                    if cell.tile.letter == tile_to_add.letter:
+                if self.grid[int(location[0])][int(location[1]+i)].tile.letter == '':
+                    pass
+                elif self.grid[int(location[0])][int(location[1]+i)].tile.letter != '':
+                    if self.grid[int(location[0])][int(location[1]+i)].tile.letter == word[i]:
+                        pass
+                    else:
+                        print('La palabra que quiere poner no coincide con las letras de las otras palabras del tablero.')
+                        return False
+            return True
+        elif orientation == 'V':
+            for i in range(len(word)):
+                if self.grid[int(location[0]+i)][int(location[1])].tile.letter == '':
+                    pass
+                elif self.grid[int(location[0]+i)][int(location[1])].tile.letter != '':
+                    if self.grid[int(location[0]+i)][int(location[1])].tile.letter == word[i]:
+                        pass
+                    else:
+                        print('La palabra que quiere poner no coincide con las letras de las otras palabras del tablero.')
+                        return False
+            return True
+
+    def add_word_empty_board(self,word_tiles,location,orientation):
+        if orientation == 'H':
+            for i in range(len(word_tiles)):
+                self.grid[int(location[0])][int(location[1]+i)].add_tile(word_tiles[i])
+            return True
+        elif orientation == 'V':
+            for i in range(len(word_tiles)):
+                self.grid[int(location[0]+i)][int(location[1])].add_tile(word_tiles)
+            return True
+    def add_word_not_empty_board(self,word_tiles,location,orientation):
+        if orientation == 'H':
+            for i in range(len(word_tiles)):
+                if self.grid[int(location[0])][int(location[1]+i)].tile.letter == '':
+                    self.grid[int(location[0])][int(location[1]+i)].add_tile(word_tiles[i])
+                elif self.grid[int(location[0])][int(location[1]+i)].tile.letter != '':
+                    if self.grid[int(location[0])][int(location[1]+i)].tile.letter == word_tiles[i].letter:
                         pass
                     else:
                         return False
             return True
-        if orientation == 'V':
-            for i in range(len(word)):
-                cell = self.grid[int(location[0]+i)][int(location[1])]
-                tile_to_add = word[i]
-                if cell.tile.letter == '':
-                    self.grid[int(location[0]+i)][int(location[1])].add_tile(tile_to_add)
-                elif cell.tile.letter != '':
-                    if cell.tile.letter == tile_to_add.letter:
+        elif orientation == 'V':
+            for i in range(len(word_tiles)):
+                if self.grid[int(location[0]+i)][int(location[1])].tile.letter == '':
+                    self.grid[int(location[0]+i)][int(location[1])].add_tile(word_tiles[i])
+                elif self.grid[int(location[0]+i)][int(location[1])].tile.letter != '':
+                    if self.grid[int(location[0]+i)][int(location[1])].tile.letter == word_tiles[i].letter:
                         pass
                     else:
                         return False

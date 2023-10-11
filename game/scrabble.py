@@ -1,9 +1,11 @@
 from game.board import Board
 from game.player import Player
 from game.models import BagTiles
+from game.tools import Tools
 
 class ScrabbleGame:
     def __init__(self, players_count):
+        self.tools = Tools()
         self.board = Board()
         self.bag_tiles = BagTiles()
         self.players = []
@@ -11,25 +13,71 @@ class ScrabbleGame:
             self.players.append(Player(index, self.bag_tiles.take(7)))
         self.current_player = None
 
-    def next_turn(self):
+    def initial_turn(self):
         if self.current_player is None:
             self.current_player = self.players[0]
-        elif id(self.current_player) == id(self.players[(len(self.players)) -1]):
+
+    def next_turn(self):
+        if id(self.current_player) == id(self.players[(len(self.players)) -1]):
             self.current_player = self.players[0]
         else:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]
 
-    def validate_word(self,word,location,orientation,player_tiles):
-        # Hacer lista con letras de palabra y del jugador y comoararlas una por una y si coinciden sacarla de la lista y seguir con la siguiente.
-        valid = True
+    def list_cells(self,word,location,orientation):
+        cells = []
+        if orientation == 'H':
+            for i in range(len(word)):
+                cells.append(self.board.grid[location[0]][location[1]+i])
+        elif orientation == 'V':
+            for i in range(len(word)):
+                cells.append(self.board.grid[location[0]+i][location[1]])
+        return cells
+
+    def score_sum(self,word,location,orientation):
+        cells = self.list_cells(word,location,orientation)
+        self.current_player.score = self.current_player.score + self.tools.calculate_word_value(cells)
+
+    def validate_word(self,word,location,orientation):
+        player_tiles = self.current_player.tiles
+        word = list(word)
+        n = 0
         for i in range(len(word)):
             for x in range(len(player_tiles)):
-                if word[i].letter == player_tiles[x].letter:
+                if word[i] == player_tiles[x].letter:
+                    n += 1
                     del player_tiles[x]
                     break
-                else:
-                    return False
-        valid = self.board.validate_word_inside_board(word,location,orientation)
-        return valid
+        if n != len(word):
+            return False
+        if self.board.validate_word_inside_board(word,location,orientation) == True:
+            pass
+        else:
+            return False
+        if self.board.is_empty() == False:
+            return self.board.validate_word_board_not_empty(word,location,orientation) == True
+        else:
+            return True
 
-    # def put_words(self,word,player_tiles,location,orientation):
+    def put_word(self,word,location,orientation):
+        player_tiles = self.current_player.tiles
+        print('______')
+        for i in range(len(player_tiles)):
+            print(player_tiles[i].letter)
+        print('______')
+        word = list(word)
+        word_tiles = []
+        for i in range(len(word)):
+            for x in range(len(player_tiles)):
+                if word[i] == player_tiles[x].letter:
+                    word_tiles.append(player_tiles[x])
+                    break
+        for i in range(len(player_tiles)):
+            print(player_tiles[i].letter)
+        print(word)
+        print('word_tiles:',len(word_tiles))
+        for i in range(len(word_tiles)):
+            print(word_tiles[i].letter)
+        if self.board.is_empty() == True:
+            self.board.add_word_empty_board(word_tiles,location,orientation)
+        elif self.board.is_empty() == False:
+            self.board.add_word_not_empty_board(word_tiles,location,orientation)
