@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.1.9] - 2023-10-10
+## Added
+# Today I worked in the option "Play" of the main menu. I make ir "work" well, I have just an issue with the part that adds the tile
+# to the board because the method validates is modifying the list of tiles of the current player before the method put word can be
+# called. I'll try to fix it to the following version, and the make the tests with patch.(I don't remerber very well how the patch
+# works, so I will do the tests later, sorry).
+
 ## [0.1.8] - 2023-10-09
 ## Added
 # Today I've done the methos to upload the score of every player so I can use it when the player's turn ends. I had to make a method

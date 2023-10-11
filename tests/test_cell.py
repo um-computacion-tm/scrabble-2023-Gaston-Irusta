@@ -20,7 +20,8 @@ class TestCell(unittest.TestCase):
     def test_remove_tile(self):
         cell = Cell(1,'',Tile('A',1))
         cell.remove_tile()
-        self.assertEqual(cell.tile,None)
+        self.assertEqual(cell.tile.letter,'')
+        self.assertEqual(cell.tile.value,0)
 
     def test_cell_value(self):
         cell = Cell(2, 'letter')

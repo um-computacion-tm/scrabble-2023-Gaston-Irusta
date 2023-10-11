@@ -101,8 +101,6 @@ class TestScrabbleGame(unittest.TestCase):
         self.assertEqual(scrabble_game.current_player.score,0)
         self.assertEqual(scrabble_game.players[3].score,42)
 
-
-
     def test_validate_word_True(self):
         scrabble_game = ScrabbleGame(players_count= 3)
         scrabble_game.current_player = scrabble_game.players[0]
@@ -118,7 +116,7 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'CASA'
         location = (1,1)
         orientation = 'H'
-        valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
+        valid_word = scrabble_game.validate_word(word,location,orientation)
         self.assertEqual(valid_word, True)
 
     def test_validate_word_not_emty_True(self):
@@ -141,7 +139,7 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'RATA'
         location = (4,4)
         orientation = 'H'
-        valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
+        valid_word = scrabble_game.validate_word(word,location,orientation)
         self.assertEqual(valid_word, True)
         
     def test_validate_word_False_1(self):
@@ -159,7 +157,7 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'MOTO'
         location = (1,1)
         orientation = 'H'
-        valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
+        valid_word = scrabble_game.validate_word(word,location,orientation)
         self.assertEqual(valid_word, False)
 
     def test_validate_word_False_2(self):
@@ -177,7 +175,7 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'COSTA'
         location = (13,14)
         orientation = 'V'
-        valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
+        valid_word = scrabble_game.validate_word(word,location,orientation)
         self.assertEqual(valid_word, False)
   
     def test_validate_word_False_3(self):
@@ -199,7 +197,7 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'COSTA'
         location = (7,6)
         orientation = 'H'
-        valid_word = scrabble_game.validate_word(word,location,orientation,scrabble_game.current_player.tiles)
+        valid_word = scrabble_game.validate_word(word,location,orientation)
         self.assertEqual(valid_word, False)
   
     def test_put_word_empty(self):
@@ -217,7 +215,7 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'CORCHO'
         location = (7,3)
         orientation = 'H'
-        scrabble_game.put_word(word,location,orientation,scrabble_game.current_player.tiles)
+        scrabble_game.put_word(word,location,orientation)
         self.assertEqual(scrabble_game.board.grid[7][3].tile.letter,'C')
         self.assertEqual(scrabble_game.board.grid[7][4].tile.letter,'O')
         self.assertEqual(scrabble_game.board.grid[7][5].tile.letter,'R')
@@ -245,7 +243,7 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'LOMA'
         location = (5,7)
         orientation = 'V'
-        scrabble_game.put_word(word,location,orientation,scrabble_game.current_player.tiles)
+        scrabble_game.put_word(word,location,orientation)
         self.assertEqual(scrabble_game.board.grid[5][7].tile.letter,'L')
         self.assertEqual(scrabble_game.board.grid[6][7].tile.letter,'O')
         self.assertEqual(scrabble_game.board.grid[7][7].tile.letter,'M')

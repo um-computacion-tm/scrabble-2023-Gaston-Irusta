@@ -37,7 +37,8 @@ class ScrabbleGame:
         cells = self.list_cells(word,location,orientation)
         self.current_player.score = self.current_player.score + self.tools.calculate_word_value(cells)
 
-    def validate_word(self,word,location,orientation,player_tiles):
+    def validate_word(self,word,location,orientation):
+        player_tiles = self.current_player.tiles
         word = list(word)
         n = 0
         for i in range(len(word)):
@@ -57,7 +58,12 @@ class ScrabbleGame:
         else:
             return True
 
-    def put_word(self,word,location,orientation,player_tiles):
+    def put_word(self,word,location,orientation):
+        player_tiles = self.current_player.tiles
+        print('______')
+        for i in range(len(player_tiles)):
+            print(player_tiles[i].letter)
+        print('______')
         word = list(word)
         word_tiles = []
         for i in range(len(word)):
@@ -65,6 +71,12 @@ class ScrabbleGame:
                 if word[i] == player_tiles[x].letter:
                     word_tiles.append(player_tiles[x])
                     break
+        for i in range(len(player_tiles)):
+            print(player_tiles[i].letter)
+        print(word)
+        print('word_tiles:',len(word_tiles))
+        for i in range(len(word_tiles)):
+            print(word_tiles[i].letter)
         if self.board.is_empty() == True:
             self.board.add_word_empty_board(word_tiles,location,orientation)
         elif self.board.is_empty() == False:

@@ -15,7 +15,7 @@ class Board:
         # Multiplier x2 word
         for i in range(1,5):
             self.grid[i][i] = Cell(2,'word',Tile('',0))
-        self.grid[7][7] = Cell(2,'word',None)
+        self.grid[7][7] = Cell(2,'word',Tile('',0))
         for i in range(10,14):
             self.grid[i][i] = Cell(2,'word',Tile('',0))
         r = 13
@@ -73,8 +73,8 @@ class Board:
         print ('                    ' , ' 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14\n')
         for i in range(15):
             for j in range(15):
-                if i != 7 and j != 7 and self.grid[i][j].tile.letter != '':
-                    boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
+                if self.grid[i][j].tile.letter != '':
+                    boardRow += '[ ' + self.grid[i][j].tile.letter + ']'
                 elif i == 7 and j == 7:
                     boardRow += '[2P]'
                 elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
@@ -105,7 +105,7 @@ class Board:
         return valid
     
     def is_empty(self):
-        if self.grid[7][7].tile is None:
+        if self.grid[7][7].tile.letter == '':
             return True
         else:
             return False

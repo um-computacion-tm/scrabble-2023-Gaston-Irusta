@@ -10,7 +10,7 @@ class Cell:
         self.tile = tile
 
     def remove_tile(self):
-        self.tile = None
+        self.tile = Tile('',0)
 
     def calculate_value(self):
         if self.tile is None:
