@@ -1,5 +1,4 @@
 from game.scrabble import ScrabbleGame
-from game.player import Player
 
 def split1():
     print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n'
