@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.1] - 2023-10-21
+## Added
+# The complex issue was fixed and now I've made a class main to make ir easier to test with the methods of the class. I also add the
+# score_sum to the main so it can show the score of the current player.
+
 ## [0.2.0] - 2023-10-20
 ## Added
 # In the next versions I'll be trying to fix the complex level issue, I had like 31 problems so I'm trying to fix then as soon as
