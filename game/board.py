@@ -138,7 +138,7 @@ class Board:
             return True
         elif orientation == 'V':
             for i in range(len(word_tiles)):
-                self.grid[int(location[0]+i)][int(location[1])].add_tile(word_tiles)
+                self.grid[int(location[0]+i)][int(location[1])].add_tile(word_tiles[i])
             return True
         
     def add_word_not_empty_board(self,word_tiles,location,orientation):

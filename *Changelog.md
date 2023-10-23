@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.2] - 2023-10-22
+## Added
+# I've fixed some minor bugs. Added methods to get the value of a tile and move the wild tile to the player's end tile list. The first
+# method will be applied when the player uses a wild tile, it will search for the tile value with a letter form the word the player
+# wants to put on the board, then the wild tile will have the correct letter and value. The second method takes the wild tile from the
+# player's list of tiles and moves it to the end. It removes it and adds it back to the end of the list. Also, I tested to see if they
+# work correctly, and they do. Additionally, I have improved the Main class to make testing easier.
+
 ## [0.2.1] - 2023-10-21
 ## Added
 # The complex issue was fixed and now I've made a class main to make ir easier to test with the methods of the class. I also add the

@@ -14,7 +14,15 @@ class TestScrabbleGame(unittest.TestCase):
         self.assertEqual(len(scrabble_game.players[0].tiles), 7)
         self.assertEqual(len(scrabble_game.players[1].tiles), 7)
         self.assertEqual(len(scrabble_game.players[2].tiles), 7)
-        self.assertEqual(len(scrabble_game.bag_tiles.tiles),77)
+        self.assertEqual(len(scrabble_game.bag_tiles.tiles),82)
+
+    def test_joker_to_end(self):
+        game = ScrabbleGame(2)
+        game.initial_turn()
+        game.current_player.tiles[2] = Tile('?',0)
+        game.wild_tile_to_end()
+        self.assertNotEqual(game.current_player.tiles[2].letter,'?')
+        self.assertEqual(game.current_player.tiles[6].letter,'?')
 
     def test_inicial_turn_when_game_is_starting(self):
         scrabble_game = ScrabbleGame(players_count=3)
@@ -114,6 +122,24 @@ class TestScrabbleGame(unittest.TestCase):
             Tile('G',2)
         ]
         word = 'CASA'
+        location = (1,1)
+        orientation = 'H'
+        valid_word = scrabble_game.validate_word(word,location,orientation)
+        self.assertEqual(valid_word, True)
+
+    def test_validate_word_True_wild_tile(self):
+        scrabble_game = ScrabbleGame(players_count= 3)
+        scrabble_game.current_player = scrabble_game.players[0]
+        scrabble_game.current_player.tiles = [
+            Tile('T',1),
+            Tile('O',1),
+            Tile('D',2),
+            Tile('?',0),
+            Tile('D',2),
+            Tile('F',4),
+            Tile('G',2)
+        ]
+        word = 'TODO'
         location = (1,1)
         orientation = 'H'
         valid_word = scrabble_game.validate_word(word,location,orientation)
