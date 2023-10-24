@@ -108,11 +108,14 @@ class Main:
         self.split2()
         self.game.next_turn()
 
-    def surrender(self):
-        if len(self.game.players) is 2:
+    def surrender_2_players(self):
             self.game.next_turn()
             print(f'El ganador es {self.game.current_player.nickname}')
             self.game_status = False
+
+    def surrender(self):
+        if len(self.game.players) is 2:
+            self.surrender_2_players()
 
         elif len(self.game.players) > 2:
             if self.game.current_player.id == 0:
