@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.3] - 2023-10-23
+## Added
+# I've added the tests to check if the game can put a word on the board when the player has wild tiles. I created methods to refill
+# the player's tiles and validate if the player's word crosses with another word placed on the board. The method to refill is used when
+# the player's turn ends and the player doesn't have 7 tiles. It also will be used in the option change tiles from the main menu. And
+# the method to validate the words that cross eachother will avoid that the player places a word in a random location. I made tests for
+# these methods and they word well.
+
 ## [0.2.2] - 2023-10-22
 ## Added
 # I've fixed some minor bugs. Added methods to get the value of a tile and move the wild tile to the player's end tile list. The first

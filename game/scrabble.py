@@ -11,7 +11,6 @@ class ScrabbleGame:
         self.players = []
         for index in range(players_count):
             self.players.append(Player(index, self.bag_tiles.take(7)))
-        
         self.current_player = None
 
     def initial_turn(self):
@@ -48,6 +47,11 @@ class ScrabbleGame:
                 tiles.append(Tile('?',0))
         self.current_player.tiles = tiles
 
+    def refill_player_tiles(self):
+        tiles = self.current_player.tiles
+        tiles.extend(self.bag_tiles.take(int(7-(len(self.current_player.tiles)))))
+        self.current_player.tiles = tiles
+
     def validate_word(self,word,location,orientation):
         player_tiles = list.copy(self.current_player.tiles)
         word = list(word)
@@ -64,8 +68,10 @@ class ScrabbleGame:
                     del player_tiles[x]
                     break
         if n != len(word):
+            print('No tienes las letras para formar la plabra.')
             return False
         if self.board.validate_word_inside_board(word,location,orientation) == False:
+            print('La palabra no entra en el tablero.')
             return False
         if self.board.is_empty() == False:
             return self.board.validate_word_board_not_empty(word,location,orientation) 

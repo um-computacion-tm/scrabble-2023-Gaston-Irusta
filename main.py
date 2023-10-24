@@ -6,8 +6,7 @@ class Main:
         self.players_count = self.get_player_count()
         self.game = ScrabbleGame(self.players_count)
         self.players_nicknames()
-        self.game_status = True
-        
+        self.game_status = True       
 
     def split1(self):
         print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n')
@@ -49,6 +48,10 @@ class Main:
     def get_word(self):
         word = str(input("¿Qué palabra quiere agregar al tablero?: "))
         word = word.upper()
+        return word
+        
+    def get_location(self):
+        word = self.get_word()
         while True:
             location_row = (int(input("¿En qué fila quiere poner la palabra?: ")))
             location_column = (int(input("¿En qué columna quiere que comience la plabra?: ")))
@@ -60,6 +63,10 @@ class Main:
             else:
                 location = []
                 print("Debe comenzar pasando por el centro...")
+        return word,location
+    
+    def get_orientation(self):
+        word, location = self.get_location()
         while True:
             orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
             orientation = orientation.upper()
@@ -78,16 +85,32 @@ class Main:
                 break
         return word,location,orientation
 
+    def get_args(self):
+        return self.get_orientation()
+
+    def play(self):
+        if self.game.board.is_empty() == True:
+            print("Recuerde que para comenzar el juego, debe iniciar con una palabra que pase por el centro del tablero.")
+        else:
+            print('La palabra debe cruzar con otra palabra.')
+        word, location, orientation = self.get_args()
+        if self.game.validate_word(word,location,orientation) == True:
+            self.game.put_word(word,location,orientation)
+            self.game.score_sum(word,location,orientation)
+            self.game.next_turn()
+        else:
+            print('La palabra no es válida.')
+
+    def change_tiles(self):
+        pass
+
     def pass_turn(self):
         self.split2()
         self.game.next_turn()
 
     def surrender(self):
         if len(self.game.players) == 2:
-            perdedor = self.game.current_player.nickname
-            self.game.next_turn()
-            ganador = self.game.current_player.nickname
-            print(f'{perdedor} se ha rendido. El ganador es {ganador}')
+            print(f'{self.game.current_player.nickname} se ha rendido. El juego ha acabado.')
             self.game_status = False
             self.split2()
 
@@ -119,19 +142,6 @@ class Main:
                 perdedor = self.game.current_player
                 self.game.current_player = self.game.players[(perdedor.id)-1]
                 del self.game.players[perdedor.id]
-
-    def play(self):
-        if self.game.board.is_empty() == True:
-            print("Recuerde que para comenzar el juego, debe iniciar con una palabra que pase por el centro del tablero.")
-        else:
-            print('La palabra debe cruzar con otra palabra.')
-        word, location, orientation = self.get_word()
-        if self.game.validate_word(word,location,orientation) == True:
-            self.game.put_word(word,location,orientation)
-            self.game.score_sum(word,location,orientation)
-            self.game.next_turn()
-        else:
-            print('La palabra no es válida.')
 
     def main(self):
         while self.game_status is True:

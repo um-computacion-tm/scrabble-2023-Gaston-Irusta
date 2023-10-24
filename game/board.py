@@ -86,7 +86,6 @@ class Board:
             boardRow = ''
         print('\n')
 
-
     def validate_word_inside_board(self, word, location, orientation):
         len_word = len(word)
         valid = False
@@ -101,14 +100,27 @@ class Board:
             return True
         else:
             return False
-    
+
+    def validate_place_board_not_empty(self,word,location,orientation):
+        cross = None
+        if orientation == 'H':
+            for i in range(len(word)):
+                if self.grid[int(location[0])][int(location[1]+i)].tile.letter != '':
+                    cross = True
+        elif orientation == 'V':
+            for i in range(len(word)):
+                if self.grid[int(location[0]+i)][int(location[1])].tile.letter != '':
+                    cross = True    
+        return cross
+
     def validate_word_board_not_empty(self,word,location,orientation):
         list_word = list(word)
-        if orientation == 'H':
-            return self.validate_word_horizontal(list_word,location)
-        elif orientation == 'V':
-            return self.validate_word_vertical(list_word,location)
-
+        if self.validate_place_board_not_empty(word,location,orientation) == True:
+            if orientation == 'H':
+                return self.validate_word_horizontal(list_word,location)
+            elif orientation == 'V':
+                return self.validate_word_vertical(list_word,location)
+        
     def validate_word_horizontal(self,list_word,location):
         for i in range(len(list_word)):
             if self.grid[int(location[0])][int(location[1]+i)].tile.letter == '':

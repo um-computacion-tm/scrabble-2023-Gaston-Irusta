@@ -59,6 +59,30 @@ class TestBoard(unittest.TestCase):
         empty = board.is_empty()
         self.assertEqual(empty, False)
 
+    def test_validate_place_board_not_empty_H(self):
+        board = Board()
+        board.grid[5][7].add_tile(Tile('L',1))
+        board.grid[6][7].add_tile(Tile('O',1))
+        board.grid[7][7].add_tile(Tile('S',1))
+        board.grid[8][7].add_tile(Tile('A',1))
+        word = 'APESTA'
+        location = (7,2)
+        orientation = 'H'
+        valid = board.validate_place_board_not_empty(word,location,orientation)
+        self.assertEqual(valid,True)
+
+    def test_validate_place_board_not_empty_V(self):
+        board = Board()
+        board.grid[7][5].add_tile(Tile('L',1))
+        board.grid[7][6].add_tile(Tile('O',1))
+        board.grid[7][7].add_tile(Tile('S',1))
+        board.grid[7][8].add_tile(Tile('A',1))
+        word = 'RESTA'
+        location = (3,8)
+        orientation = 'V'
+        valid = board.validate_place_board_not_empty(word,location,orientation)
+        self.assertEqual(valid,True)       
+
     def test_validate_word_board_not_empty_H_True(self):
         board = Board()
         board.grid[7][7].add_tile(Tile('C', 1))
