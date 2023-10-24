@@ -114,37 +114,33 @@ class Main:
             self.game_status = False
 
     def surrender(self):
-        if len(self.game.players) is 2:
-            self.surrender_2_players()
-
-        elif len(self.game.players) > 2:
-            if self.game.current_player.id == 0:
-                print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
-                self.game.next_turn()
-                del self.game.players[0]  
-                for i in range(len(self.game.players)):
-                    self.game.players[i].id -= 1
-            elif 0 < self.game.current_player.id < len(self.game.players) and len(self.game.players) == 3:
-                print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
-                perdedor = self.game.current_player
-                self.game.next_turn()
-                del self.game.players[perdedor.id]
-                self.game.current_player.id -= 1
-            elif 0 < self.game.current_player.id < len(self.game.players) and len(self.game.players) == 4:
-                print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
-                perdedor = self.game.current_player
-                self.game.next_turn()
-                del self.game.players[perdedor.id]
-                if perdedor.id == 1:
-                    self.game.players[1].id = 1
-                    self.game.players[2].id = 2
-                if perdedor.id == 2:
-                    self.game.players[2].id = 2
-            elif self.game.current_player.id == len(self.game.players):
-                print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
-                perdedor = self.game.current_player
-                self.game.current_player = self.game.players[(perdedor.id)-1]
-                del self.game.players[perdedor.id]
+        if self.game.current_player.id == 0:
+            print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
+            self.game.next_turn()
+            del self.game.players[0]  
+            for i in range(len(self.game.players)):
+                self.game.players[i].id -= 1
+        elif 0 < self.game.current_player.id < len(self.game.players) and len(self.game.players) == 3:
+            print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
+            perdedor = self.game.current_player
+            self.game.next_turn()
+            del self.game.players[perdedor.id]
+            self.game.current_player.id -= 1
+        elif 0 < self.game.current_player.id < len(self.game.players) and len(self.game.players) == 4:
+            print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
+            perdedor = self.game.current_player
+            self.game.next_turn()
+            del self.game.players[perdedor.id]
+            if perdedor.id == 1:
+                self.game.players[1].id = 1
+                self.game.players[2].id = 2
+            if perdedor.id == 2:
+                self.game.players[2].id = 2
+        elif self.game.current_player.id == len(self.game.players):
+            print(f'{self.game.current_player.nickname} se ha rendido. Quedan {(len(self.game.players))-1} jugadores.')
+            perdedor = self.game.current_player
+            self.game.current_player = self.game.players[(perdedor.id)-1]
+            del self.game.players[perdedor.id]
 
     def main(self):
         while self.game_status is True:
@@ -160,7 +156,10 @@ class Main:
                 self.pass_turn()
 
             elif opcion == 4:
-                self.surrender()
+                if len(self.game.players) is 2:
+                    self.surrender_2_players()
+                elif len(self.game.players) > 2:
+                    self.surrender()
 
             elif opcion > 4:
                 print('Valor invalido. Elegir (1;2;3).')
