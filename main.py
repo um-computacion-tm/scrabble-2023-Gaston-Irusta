@@ -40,6 +40,7 @@ class Main:
         self.game.board.print_board()
         self.split1()
         player_tiles=[]
+        self.game.wild_tile_to_end()
         for i in range(len(self.game.current_player.tiles)):
             player_tiles.append(self.game.current_player.tiles[i].letter)
         print(f"Turno del jugardor {self.game.current_player.nickname}. Puntaje de {self.game.current_player.nickname}: {self.game.current_player.score}.\n Sus fichas son:\n                                          {player_tiles}\n")
@@ -52,19 +53,25 @@ class Main:
         
     def get_location(self):
         word = self.get_word()
-        while True:
+        location = []
+        if self.game.board.is_empty() == True:
+            while True:
+                location_row = (int(input("¿En qué fila quiere poner la palabra?: ")))
+                location_column = (int(input("¿En qué columna quiere que comience la plabra?: ")))
+                location = [location_row,location_column]
+                if location[0] == 7 and location[1] <= 7 and (location[1]+(len(word)-1)) >= 7:
+                    break
+                if location[1] == 7 and location[0] <= 7 and (location[0]+(len(word)-1)) >= 7:
+                    break
+                else:
+                    location = []
+                    print("Debe comenzar pasando por el centro...")
+        elif self.game.board.is_empty() == False:
             location_row = (int(input("¿En qué fila quiere poner la palabra?: ")))
             location_column = (int(input("¿En qué columna quiere que comience la plabra?: ")))
             location = [location_row,location_column]
-            if location[0] == 7 and location[1] <= 7 and (location[1]+(len(word)-1)) >= 7:
-                break
-            if location[1] == 7 and location[0] <= 7 and (location[0]+(len(word)-1)) >= 7:
-                break
-            else:
-                location = []
-                print("Debe comenzar pasando por el centro...")
         return word,location
-    
+
     def get_orientation(self):
         word, location = self.get_location()
         while True:
@@ -97,9 +104,8 @@ class Main:
         if self.game.validate_word(word,location,orientation) == True:
             self.game.put_word(word,location,orientation)
             self.game.score_sum(word,location,orientation)
+            self.game.refill_player_tiles()
             self.game.next_turn()
-        else:
-            print('La palabra no es válida.')
 
     def change_tiles(self):
         pass
@@ -110,7 +116,7 @@ class Main:
 
     def surrender_2_players(self):
             self.game.next_turn()
-            print(f'El ganador es {self.game.current_player.nickname}')
+            print(f'Ha ganado {self.game.current_player.nickname}!')
             self.game_status = False
 
     def surrender(self):
@@ -156,7 +162,7 @@ class Main:
                 self.pass_turn()
 
             elif opcion == 4:
-                if len(self.game.players) is 2:
+                if len(self.game.players) == 2:
                     self.surrender_2_players()
                 elif len(self.game.players) > 2:
                     self.surrender()
