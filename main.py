@@ -110,7 +110,6 @@ class Main:
 
     def surrender(self):
         if len(self.game.players) == 2:
-            print(self.game.current_player.nickname,' se ha rendido. El juego ha acabado.')
             del self.game.players[self.game.current_player.id]
 
         elif len(self.game.players) > 2:
@@ -158,7 +157,7 @@ class Main:
             elif opcion == 4:
                 self.surrender()
                 if len(self.game.players) == 1:
-                    print(f'El ganador es {self.game.players[0].nickname}')
+                    print(f'El ganador es {self.game.players[0].nickname}, todos se rindieron.')
                     break
             elif opcion > 4:
                 print('Valor invalido. Elegir (1;2;3).')
