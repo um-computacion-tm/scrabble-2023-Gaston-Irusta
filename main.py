@@ -109,7 +109,7 @@ class Main:
         self.game.next_turn()
 
     def surrender(self):
-        if len(self.game.players) == 2:
+        if len(self.game.players) is 2:
             del self.game.players[self.game.current_player.id]
 
         elif len(self.game.players) > 2:
@@ -158,7 +158,7 @@ class Main:
                 self.surrender()
                 if len(self.game.players) == 1:
                     print(f'El ganador es {self.game.players[0].nickname}, todos se rindieron.')
-                    break
+                    self.game_status = False
             elif opcion > 4:
                 print('Valor invalido. Elegir (1;2;3).')
 
