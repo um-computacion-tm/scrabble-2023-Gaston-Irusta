@@ -110,7 +110,7 @@ class Main:
 
     def surrender(self):
         if len(self.game.players) == 2:
-            print(f'{self.game.current_player.nickname} se ha rendido. El juego ha acabado.')
+            print(self.game.current_player.nickname,' se ha rendido. El juego ha acabado.')
             self.game_status = False
             self.split2()
 
