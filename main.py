@@ -107,8 +107,63 @@ class Main:
             self.game.refill_player_tiles()
             self.game.next_turn()
 
+    def ask_if_repeat_change(self):
+        answ = None
+
+        while True:
+            answ = str(input("¿Quiere intercambiar otra letra más? si/no: "))
+            answ = answ.upper()
+            if answ == 'SI':
+                print('dice si')
+                break
+            elif answ == 'NO':
+                print('dice no')
+                break
+            else:
+                print("Escriba si / no por favor.")
+
+        return answ
+
+    def get_letters_to_change(self):
+        exchange = []
+
+        while True:
+            letter = str(input("¿Qué letra quiere intercambiar? Escriba solo la letra: "))
+            letter = letter.upper()
+            exchange.append(letter)
+            answ = self.ask_if_repeat_change()
+            print(f'retornó {answ}')
+            if answ == 'NO':
+                print('Supuesto break!')
+                break
+
+        return exchange
+
+    def validate_and_get_tiles_to_change(self):
+        tiles = []
+        exchange = []
+
+        while True:
+            exchange = self.get_letters_to_change()
+            if self.game.board.validate_word_and_letters_change(word=exchange,player_tiles=list.copy(self.game.current_player.tiles)) == False:
+                print("No tienes esas letras para intercambiar. Prueba nuevamente.")
+            elif self.game.board.validate_word_and_letters(word=exchange,player_tiles=list.copy(self.game.current_player.tiles)) == True:
+                break
+
+        for i in range(len(exchange)):
+            for x in range(len(self.game.current_player.tiles)):
+                if exchange[i] == self.game.current_player.tiles[x].letter:
+                    tiles.append(self.game.current_player.tiles[x])
+                    del self.game.current_player.tiles[x]
+                    break
+
+        return tiles
+
     def change_tiles(self):
-        pass
+        tiles = self.validate_and_get_tiles_to_change()
+        self.game.bag_tiles.put(tiles)
+        self.game.refill_player_tiles()
+        self.game.next_turn()
 
     def pass_turn(self):
         self.split2()
@@ -156,7 +211,7 @@ class Main:
                 self.play()
 
             elif opcion == 2:
-                print('cambiar fichas')
+                self.change_tiles()
 
             elif opcion == 3:
                 self.pass_turn()
@@ -167,8 +222,8 @@ class Main:
                 elif len(self.game.players) > 2:
                     self.surrender()
 
-            elif opcion > 4:
-                print('Valor invalido. Elegir (1;2;3).')
+            elif opcion < 1 or opcion > 4:
+                print('Opcion invalida. Elegir (1;2;3;4).')
 
 if __name__ == '__main__':
     main = Main()

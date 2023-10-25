@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.4] - 2023-10-24
+## Added
+# I created the methods to the option change tiles in the main menu. The method asks the player to write the letter that wants to
+# change, then asks if the player wants to changer another tile, if the answer is yes, the method adds a tile to the list of letters
+# to change and asks again, but if the answer is no, the method continius with the validate and get tile. It validates if the player
+# has the tiles to change or not. Then takes the player's tiles and puts them into the bag tiles and takes others randomly to complete
+# the number of seven tiles to play. 
+
 ## [0.2.3] - 2023-10-23
 ## Added
 # I've added the tests to check if the game can put a word on the board when the player has wild tiles. I created methods to refill

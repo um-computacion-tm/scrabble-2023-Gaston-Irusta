@@ -56,18 +56,7 @@ class ScrabbleGame:
         player_tiles = list.copy(self.current_player.tiles)
         word = list(word)
         self.wild_tile_to_end()
-        n = 0
-        for i in range(len(word)):
-            for x in range(len(player_tiles)):
-                if word[i] == player_tiles[x].letter:
-                    n += 1
-                    del player_tiles[x]
-                    break
-                elif player_tiles[x].letter == '?':
-                    n += 1
-                    del player_tiles[x]
-                    break
-        if n != len(word):
+        if self.board.validate_word_and_letters(word,player_tiles) == False:
             print('No tienes las letras para formar la plabra.')
             return False
         if self.board.validate_word_inside_board(word,location,orientation) == False:
