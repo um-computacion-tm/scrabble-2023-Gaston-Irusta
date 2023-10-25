@@ -1,7 +1,9 @@
 from game.scrabble import ScrabbleGame
+import os
 
 class Main:
     def __init__(self):
+        os.system('clear')
         print("¡¡¡ WELCOME TO SCRABBLE !!!")
         self.players_count = self.get_player_count()
         self.game = ScrabbleGame(self.players_count)
@@ -13,6 +15,7 @@ class Main:
 
     def split2(self):
         print ('_______________________________________________________________________________________________________\n')
+
 
     def get_player_count(self):
         while True:
@@ -46,19 +49,36 @@ class Main:
         print(f"Turno del jugardor {self.game.current_player.nickname}. Puntaje de {self.game.current_player.nickname}: {self.game.current_player.score}.\n Sus fichas son:\n                                          {player_tiles}\n")
         print('                  ','1- Jugar','   ','2- Intercambiar fichas','   ','3- Pasar','   ','4- Rendirse','\n')
 
+
     def get_word(self):
-        word = str(input("¿Qué palabra quiere agregar al tablero?: "))
-        word = word.upper()
-        return word
-        
+        try:
+            word = str(input("¿Qué palabra quiere agregar al tablero?: "))
+            word = word.upper()
+            return word        
+        except ValueError:
+            print("Escriba una palabra por favor.")
+
     def get_location(self):
+        location= []
+        while True:
+            try:
+                location_row = (int(input("¿En qué fila quiere poner la palabra?(0-14): ")))
+                location_column = (int(input("¿En qué columna quiere que comience la plabra?(0-14): ")))
+                if location_column is str or location_row is str:
+                    raise ValueError
+                location = [location_row,location_column]
+                break
+            except ValueError:
+                print("Debe escribir un número.")
+        return location
+
+    def validate_location(self):
         word = self.get_word()
-        location = []
+
         if self.game.board.is_empty() == True:
             while True:
-                location_row = (int(input("¿En qué fila quiere poner la palabra?: ")))
-                location_column = (int(input("¿En qué columna quiere que comience la plabra?: ")))
-                location = [location_row,location_column]
+                location = self.get_location()
+                print(location)
                 if location[0] == 7 and location[1] <= 7 and (location[1]+(len(word)-1)) >= 7:
                     break
                 if location[1] == 7 and location[0] <= 7 and (location[0]+(len(word)-1)) >= 7:
@@ -67,13 +87,11 @@ class Main:
                     location = []
                     print("Debe comenzar pasando por el centro...")
         elif self.game.board.is_empty() == False:
-            location_row = (int(input("¿En qué fila quiere poner la palabra?: ")))
-            location_column = (int(input("¿En qué columna quiere que comience la plabra?: ")))
-            location = [location_row,location_column]
+            location = self.get_location()
         return word,location
 
     def get_orientation(self):
-        word, location = self.get_location()
+        word, location = self.validate_location()
         while True:
             orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
             orientation = orientation.upper()
@@ -82,10 +100,10 @@ class Main:
             elif self.game.board.is_empty() == True:
                 if location[0] == 7 and location[1] == 7:
                     break
-                elif location[0] == 7 and orientation != 'H':
+                elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
                     print('Recuerde pase por el centro...')
-                elif location[1] == 7 and orientation != 'V':
-                    print('Recuerde pase por el centro...')
+                # elif location[1] == 7 and orientation != 'V':
+                #     print('Recuerde pase por el centro...')
                 else:
                     break
             else:
@@ -107,20 +125,22 @@ class Main:
             self.game.refill_player_tiles()
             self.game.next_turn()
 
+
     def ask_if_repeat_change(self):
         answ = None
 
         while True:
-            answ = str(input("¿Quiere intercambiar otra letra más? si/no: "))
-            answ = answ.upper()
-            if answ == 'SI':
-                print('dice si')
-                break
-            elif answ == 'NO':
-                print('dice no')
-                break
-            else:
-                print("Escriba si / no por favor.")
+            try:
+                answ = str(input("¿Quiere intercambiar otra letra más? Si/No: "))
+                answ = answ.upper()
+                if answ == 'SI':
+                    break
+                elif answ == 'NO':
+                    break
+                else:
+                    raise ValueError
+            except ValueError:
+                print("Escriba Si / No por favor.")
 
         return answ
 
@@ -132,31 +152,46 @@ class Main:
             letter = letter.upper()
             exchange.append(letter)
             answ = self.ask_if_repeat_change()
-            print(f'retornó {answ}')
             if answ == 'NO':
-                print('Supuesto break!')
                 break
 
         return exchange
 
-    def validate_and_get_tiles_to_change(self):
+    def get_tiles_to_change(self,exchange):
         tiles = []
+        if len(exchange) > 1:
+            for i in range(len(exchange)):
+                for x in range(len(self.game.current_player.tiles)):
+                    if exchange[i] == self.game.current_player.tiles[x].letter:
+                        tiles.append(self.game.current_player.tiles[x])
+                        del self.game.current_player.tiles[x]
+                        break
+        elif len(exchange) == 1:
+            for x in range(len(self.game.current_player.tiles)):
+                if exchange[0] == self.game.current_player.tiles[x].letter:
+                    tiles.append(self.game.current_player.tiles[x])
+                    del self.game.current_player.tiles[x]
+                    break
+        return tiles
+
+    def get_just_letter_player(self):
+        tiles = list.copy(self.game.current_player.tiles)
+        for i in range(len(tiles)):
+            if tiles[i].letter == '?':
+                del tiles[i]
+        return tiles
+
+    def validate_and_get_tiles_to_change(self):
         exchange = []
 
         while True:
             exchange = self.get_letters_to_change()
-            if self.game.board.validate_word_and_letters_change(word=exchange,player_tiles=list.copy(self.game.current_player.tiles)) == False:
+            if self.game.board.validate_word_and_letters(word=exchange,player_tiles=self.get_just_letter_player()) == False:
                 print("No tienes esas letras para intercambiar. Prueba nuevamente.")
-            elif self.game.board.validate_word_and_letters(word=exchange,player_tiles=list.copy(self.game.current_player.tiles)) == True:
+            elif self.game.board.validate_word_and_letters(word=exchange,player_tiles=self.get_just_letter_player()) == True:
                 break
 
-        for i in range(len(exchange)):
-            for x in range(len(self.game.current_player.tiles)):
-                if exchange[i] == self.game.current_player.tiles[x].letter:
-                    tiles.append(self.game.current_player.tiles[x])
-                    del self.game.current_player.tiles[x]
-                    break
-
+        tiles = self.get_tiles_to_change(exchange)
         return tiles
 
     def change_tiles(self):
@@ -203,27 +238,40 @@ class Main:
             self.game.current_player = self.game.players[(perdedor.id)-1]
             del self.game.players[perdedor.id]
 
+    def get_opcion(self):
+        while True:
+            try:
+                opcion = int(input('Ingrese el número de la opcion que quiere realizar.(1-4): '))
+                if opcion < 1 or opcion > 4:
+                    raise ValueError
+                return opcion
+            except ValueError:
+                print('Opcion invalida. Elegir (1;2;3;4).')
+
+
     def main(self):
         while self.game_status is True:
             self.print_menu()
-            opcion = int(input('Ingrese el número de la opcion que quiere realizar: '))
+            opcion = self.get_opcion()
+
             if opcion == 1:
                 self.play()
-
+                os.system('clear')
             elif opcion == 2:
                 self.change_tiles()
+                os.system('clear')
 
             elif opcion == 3:
                 self.pass_turn()
+                os.system('clear')
 
             elif opcion == 4:
                 if len(self.game.players) == 2:
                     self.surrender_2_players()
                 elif len(self.game.players) > 2:
                     self.surrender()
+                os.system('clear')
 
-            elif opcion < 1 or opcion > 4:
-                print('Opcion invalida. Elegir (1;2;3;4).')
 
 if __name__ == '__main__':
     main = Main()

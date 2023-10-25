@@ -90,7 +90,7 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game.score_sum(word,location,orientation)
         self.assertEqual(scrabble_game.players[0].score,22)
 
-    def score_sum_2(self):
+    def test_score_sum_2(self):
         scrabble_game = ScrabbleGame(players_count=4)
         scrabble_game.current_player = scrabble_game.players[2]
         scrabble_game.players[3].score = 24
@@ -108,7 +108,7 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game.next_turn()
         self.assertEqual(scrabble_game.current_player.score,0)
         self.assertEqual(scrabble_game.players[3].score,42)
-
+        
     def test_refill_player_tiles(self):
         scrabble_game = ScrabbleGame(players_count=2)
         scrabble_game.initial_turn()
@@ -157,7 +157,7 @@ class TestScrabbleGame(unittest.TestCase):
         valid_word = scrabble_game.validate_word(word,location,orientation)
         self.assertEqual(valid_word, True)
 
-    def test_validate_word_not_emty_True(self):
+    def test_validate_word_not_empty_True(self):
         scrabble_game = ScrabbleGame(players_count= 3)
         scrabble_game.current_player = scrabble_game.players[0]
         scrabble_game.current_player.tiles = [

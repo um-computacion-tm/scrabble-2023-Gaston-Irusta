@@ -69,14 +69,16 @@ class Board:
             for j in range(15):
                 if self.grid[i][j].tile.letter != '':
                     boardRow += '[ ' + self.grid[i][j].tile.letter + ']'
-                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
-                    boardRow += '[2P]'
-                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
-                    boardRow += '[3P]'
-                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
-                    boardRow += '[2L]'
-                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
-                    boardRow += '[3L]'
+                elif self.grid[i][j].multiplier_type == 'word': 
+                    if self.grid[i][j].multiplier == 2:
+                        boardRow += '[2P]'
+                    elif self.grid[i][j].multiplier == 3: 
+                        boardRow += '[3P]'
+                elif self.grid[i][j].multiplier_type == 'letter':
+                    if self.grid[i][j].multiplier == 2:
+                        boardRow += '[2L]'
+                    elif self.grid[i][j].multiplier == 3:
+                        boardRow += '[3L]'
                 else:
                     boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
             if (i+1) <= 10:
@@ -106,7 +108,7 @@ class Board:
             return True
         elif n != len(word):
             return False
-        
+
     def validate_word_and_letters(self,word,player_tiles):
         n = 0
         for i in range(len(word)):
@@ -120,17 +122,7 @@ class Board:
                     del player_tiles[x]
                     break
         return self.verify_n(word,n)
-    
-    def validate_word_and_letters_change(self,word,player_tiles):
-        n = 0
-        for i in range(len(word)):
-            for x in range(len(player_tiles)):
-                if word[i] == player_tiles[x].letter:
-                    n += 1
-                    del player_tiles[x]
-                    break
-        return self.verify_n(word,n)
-        
+            
     def validate_place_board_not_empty(self,word,location,orientation):
         cross = None
         if orientation == 'H':
