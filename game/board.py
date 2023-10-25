@@ -101,6 +101,12 @@ class Board:
         else:
             return False
 
+    def verify_n(self,word,n):
+        if n == len(word):
+            return True
+        elif n != len(word):
+            return False
+        
     def validate_word_and_letters(self,word,player_tiles):
         n = 0
         for i in range(len(word)):
@@ -113,23 +119,17 @@ class Board:
                     n += 1
                     del player_tiles[x]
                     break
-        if n == len(word):
-            return True
-        elif n != len(word):
-            return False
+        return self.verify_n(word,n)
     
     def validate_word_and_letters_change(self,word,player_tiles):
-        j = 0
+        n = 0
         for i in range(len(word)):
             for x in range(len(player_tiles)):
                 if word[i] == player_tiles[x].letter:
-                    j += 1
+                    n += 1
                     del player_tiles[x]
                     break
-        if j == len(word):
-            return True
-        elif j != len(word):
-            return False
+        return self.verify_n(word,n)
         
     def validate_place_board_not_empty(self,word,location,orientation):
         cross = None
