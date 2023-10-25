@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.5] - 2023-10-25
+## Added
+# I've fixed somo problems with the inputs, if it ask for an int and the player puts a str, or int in a str input. The game doesn't
+# crash. Fixed the problem with the option change tiles and the wild tiles, now if the player puts a wrong letter, the game doesn't
+# change the wild tile, it warns that the player doesn't have the tiles.
+
 ## [0.2.4] - 2023-10-24
 ## Added
 # I created the methods to the option change tiles in the main menu. The method asks the player to write the letter that wants to
