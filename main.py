@@ -78,7 +78,6 @@ class Main:
         if self.game.board.is_empty() == True:
             while True:
                 location = self.get_location()
-                print(location)
                 if location[0] == 7 and location[1] <= 7 and (location[1]+(len(word)-1)) >= 7:
                     break
                 if location[1] == 7 and location[0] <= 7 and (location[0]+(len(word)-1)) >= 7:

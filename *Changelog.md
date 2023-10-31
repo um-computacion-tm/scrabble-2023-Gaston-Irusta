@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.6] - 2023-10-31
+## Added
+# Added dictionary to check if the word the player wants to use exists. The method works with a local .txt file, looks for the word in
+# the file and returns True or False depending on whether it is in the file or not. I tested it and works correctly.
+
 ## [0.2.5] - 2023-10-25
 ## Added
 # I've fixed somo problems with the inputs, if it ask for an int and the player puts a str, or int in a str input. The game doesn't

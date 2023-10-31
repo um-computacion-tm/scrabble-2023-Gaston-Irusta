@@ -2,9 +2,11 @@ from game.board import Board
 from game.player import Player
 from game.models import BagTiles, Tile
 from game.tools import Tools
+from game.dictionary import Dictionary
 
 class ScrabbleGame:
     def __init__(self, players_count):
+        self.dic = Dictionary()
         self.tools = Tools()
         self.board = Board()
         self.bag_tiles = BagTiles()
@@ -54,16 +56,20 @@ class ScrabbleGame:
 
     def validate_word(self,word,location,orientation):
         player_tiles = list.copy(self.current_player.tiles)
-        word = list(word)
+        word_letters = list(word)
         self.wild_tile_to_end()
-        if self.board.validate_word_and_letters(word,player_tiles) == False:
+        word = self.dic.remove_accents(word)
+        if self.dic.verify_word(word) == False:
+            print('La palabra no existe.')
+            return False
+        elif self.board.validate_word_and_letters(word_letters,player_tiles) == False:
             print('No tienes las letras para formar la plabra.')
             return False
-        if self.board.validate_word_inside_board(word,location,orientation) == False:
+        if self.board.validate_word_inside_board(word_letters,location,orientation) == False:
             print('La palabra no entra en el tablero.')
             return False
         if self.board.is_empty() == False:
-            return self.board.validate_word_board_not_empty(word,location,orientation) 
+            return self.board.validate_word_board_not_empty(word_letters,location,orientation) 
         else:
             return True
 
