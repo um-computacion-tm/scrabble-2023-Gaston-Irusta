@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.7] - 2023-11-01
+## Added
+# I added a method to verify which letters are on the board so that the player is not asked for them when putting a word on the board.
+# Based on the word and location, it searches the board with that data for letters that match the letters in the word. If some letters
+# match, it removes them from the list of letters it asks the player, but if none of them match, it returns the same list and asks the
+# player to have all the letters. The method is tested and works.
+
 ## [0.2.6] - 2023-10-31
 ## Added
 # Added dictionary to check if the word the player wants to use exists. The method works with a local .txt file, looks for the word in

@@ -59,6 +59,25 @@ class TestBoard(unittest.TestCase):
         empty = board.is_empty()
         self.assertEqual(empty, False)
 
+    def test_use_letters_on_board(self):
+        board = Board()
+
+        board.grid[5][3].add_tile(Tile('G',1))
+        board.grid[5][4].add_tile(Tile('A',1))
+        board.grid[5][5].add_tile(Tile('T',1))
+        board.grid[5][6].add_tile(Tile('O',1))
+
+        board.grid[9][3].add_tile(Tile('C',1))
+        board.grid[9][4].add_tile(Tile('O',1))
+        board.grid[9][5].add_tile(Tile('C',1))
+        board.grid[9][6].add_tile(Tile('O',1))
+
+        word = 'CORCHO'
+        word = list(word)
+        location = [4,6]
+        word_return = board.use_letter_on_board_V(word,location)
+        self.assertNotEqual(word_return,word)
+
     def test_validate_word_and_letters_True(self):
         board = Board()
         word = 'LENTO'
@@ -72,7 +91,9 @@ class TestBoard(unittest.TestCase):
             Tile('S',1),
             Tile('A',1),
         ]
-        valid = board.validate_word_and_letters(word,player_tiles)
+        location = [5,7]
+        orientation = 'V'
+        valid = board.validate_word_and_letters(word,location,orientation,player_tiles)
         self.assertEqual(valid,True)
 
     def test_validate_word_and_letters_False(self):
@@ -88,7 +109,9 @@ class TestBoard(unittest.TestCase):
             Tile('S',1),
             Tile('A',1),
         ]
-        valid = board.validate_word_and_letters(word,player_tiles)
+        location = [7,5]
+        orientation = 'H'
+        valid = board.validate_word_and_letters(word,location,orientation,player_tiles)
         self.assertEqual(valid,False)
 
     def test_validate_place_board_not_empty_H(self):

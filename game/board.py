@@ -109,7 +109,30 @@ class Board:
         elif n != len(word):
             return False
 
-    def validate_word_and_letters(self,word,player_tiles):
+    def use_letter_on_board_H(self,word,location):
+        word_return = list.copy(word)
+        word_copy = list.copy(word)
+        for i in range(len(word_copy)):
+            if self.grid[int(location[0])][int((location[1] + i))].tile.letter == word_copy[i]:
+                word_return.remove(word_copy[i])
+        return word_return
+
+    def use_letter_on_board_V(self,word,location):
+        word_return = list.copy(word)
+        word_copy = list.copy(word)
+        for i in range(len(word_copy)):
+            if self.grid[int((location[0] + i))][int(location[1])].tile.letter == word_copy[i]:
+                word_return.remove(word_copy[i])
+        return word_return
+
+    def use_letter_on_board(self,word,location,orientation):
+        if orientation == 'H':
+            return self.use_letter_on_board_H(word,location)
+        elif orientation == 'V':
+            return self.use_letter_on_board_V(word,location)
+
+    def validate_word_and_letters(self,word,location,orientation,player_tiles):
+        word = self.use_letter_on_board(word,location,orientation)
         n = 0
         for i in range(len(word)):
             for x in range(len(player_tiles)):
@@ -124,7 +147,7 @@ class Board:
         return self.verify_n(word,n)
             
     def validate_place_board_not_empty(self,word,location,orientation):
-        cross = None
+        cross = False
         if orientation == 'H':
             for i in range(len(word)):
                 if self.grid[int(location[0])][int(location[1]+i)].tile.letter != '':
@@ -164,6 +187,7 @@ class Board:
                 print('La palabra que quiere poner no coincide con las letras de las otras palabras del tablero.')
                 return False
         return True
+
 
     def add_word_empty_board(self,word_tiles,location,orientation):
         if orientation == 'H':
