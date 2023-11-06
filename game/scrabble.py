@@ -65,7 +65,7 @@ class ScrabbleGame:
         if self.board.validate_word_inside_board(word_letters,location,orientation) == False:
             print('La palabra no entra en el tablero.')
             return False
-        if self.board.validate_word_and_letters(word_letters,location,orientation,player_tiles) == False:
+        if self.board.validate_word_and_letters_play(word_letters,location,orientation,player_tiles) == False:
             print('No tienes las letras para formar la plabra.')
             return False
         if self.board.is_empty() == False:

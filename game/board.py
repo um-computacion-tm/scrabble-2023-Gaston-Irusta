@@ -62,30 +62,31 @@ class Board:
             c4 += 8
             c5 += 2
 
-    def print_board(self):
+    def build_board(self):
         boardRow = ''
-        print ('                    ' , ' 0   1   2   3   4   5   6   7   8   9   10  11  12  13  14\n')
         for i in range(15):
             for j in range(15):
                 if self.grid[i][j].tile.letter != '':
-                    boardRow += '[ ' + self.grid[i][j].tile.letter + ']'
-                elif self.grid[i][j].multiplier_type == 'word': 
-                    if self.grid[i][j].multiplier == 2:
-                        boardRow += '[2P]'
-                    elif self.grid[i][j].multiplier == 3: 
-                        boardRow += '[3P]'
-                elif self.grid[i][j].multiplier_type == 'letter':
-                    if self.grid[i][j].multiplier == 2:
-                        boardRow += '[2L]'
-                    elif self.grid[i][j].multiplier == 3:
-                        boardRow += '[3L]'
+                    boardRow += '| ' + self.grid[i][j].tile.letter + ' |'
+                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
+                    boardRow += '|2Pl|'
+                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
+                    boardRow += '|3Pl|'
+                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
+                    boardRow += '|2Lt|'
+                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
+                    boardRow += '|3Lt|'
                 else:
-                    boardRow += '[ ' + self.grid[i][j].tile.letter + ' ]'
+                    boardRow += '|  ' + self.grid[i][j].tile.letter + ' |'
             if (i+1) <= 10:
                 print ('                ',str(i),' ',boardRow)
             else:
                 print ('               ',str(i),' ',boardRow)
             boardRow = ''
+
+    def print_board(self):
+        print ('                    ' , '  0    1    2    3    4    5    6    7    8    9    10   11   12   13   14\n')
+        self.build_board()
         print('\n')
 
     def validate_word_inside_board(self, word, location, orientation):
@@ -131,7 +132,7 @@ class Board:
         elif orientation == 'V':
             return self.use_letter_on_board_V(word,location)
 
-    def validate_word_and_letters(self,word,location,orientation,player_tiles):
+    def validate_word_and_letters_play(self,word,location,orientation,player_tiles):
         word = self.use_letter_on_board(word,location,orientation)
         n = 0
         for i in range(len(word)):
@@ -145,7 +146,17 @@ class Board:
                     del player_tiles[x]
                     break
         return self.verify_n(word,n)
-            
+
+    def validate_word_and_letters_change(self,exchage,player_tiles):
+        n = 0
+        for j in range(len(exchage)):
+            for y in range(len(player_tiles)):
+                if exchage[j] == player_tiles[y].letter:
+                    n += 1
+                    del player_tiles[y]
+                    break
+        return self.verify_n(exchage,n)
+
     def validate_place_board_not_empty(self,word,location,orientation):
         cross = False
         if orientation == 'H':

@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from game.board import Board
 from game.models import Tile
 
@@ -15,7 +16,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[6][8].multiplier_type,'letter')
         self.assertEqual(board.grid[5][9].multiplier,3)
         self.assertEqual(board.grid[5][9].multiplier_type,'letter')
-    
+
     def test_H_True_word_inside_board(self):
         board = Board()
         word = "Facultad"
@@ -78,7 +79,7 @@ class TestBoard(unittest.TestCase):
         word_return = board.use_letter_on_board_V(word,location)
         self.assertNotEqual(word_return,word)
 
-    def test_validate_word_and_letters_True(self):
+    def test_validate_word_and_letters_play_True(self):
         board = Board()
         word = 'LENTO'
         word = list(word)
@@ -93,10 +94,10 @@ class TestBoard(unittest.TestCase):
         ]
         location = [5,7]
         orientation = 'V'
-        valid = board.validate_word_and_letters(word,location,orientation,player_tiles)
+        valid = board.validate_word_and_letters_play(word,location,orientation,player_tiles)
         self.assertEqual(valid,True)
 
-    def test_validate_word_and_letters_False(self):
+    def test_validate_word_and_letters_play_False(self):
         board = Board()
         word = 'PUNTO'
         word = list(word)
@@ -111,7 +112,7 @@ class TestBoard(unittest.TestCase):
         ]
         location = [7,5]
         orientation = 'H'
-        valid = board.validate_word_and_letters(word,location,orientation,player_tiles)
+        valid = board.validate_word_and_letters_play(word,location,orientation,player_tiles)
         self.assertEqual(valid,False)
 
     def test_validate_place_board_not_empty_H(self):

@@ -54,43 +54,36 @@ class Main:
         try:
             word = str(input("¿Qué palabra quiere agregar al tablero?: "))
             word = word.upper()
-            return word        
+            num = int(len(word))
+            return word, num     
         except ValueError:
             print("Escriba una palabra por favor.")
 
     def get_location(self):
+        word,num = self.get_word() # type: ignore
         location= []
         while True:
             try:
                 location_row = (int(input("¿En qué fila quiere poner la palabra?(0-14): ")))
                 location_column = (int(input("¿En qué columna quiere que comience la plabra?(0-14): ")))
+                location = [location_row,location_column]
                 if location_column is str or location_row is str:
                     raise ValueError
-                location = [location_row,location_column]
+                elif self.game.board.is_empty() == True:
+                    if location[0] > 7 or location[1] > 7:
+                        raise ValueError
+                    elif location[0] == 7 and location[1] <= 7 and (location[1]+(num)) <= 7:
+                        raise ValueError
+                    elif location[1] == 7 and location[0] <= 7 and (location[0]+(num)) <= 7:
+                        raise ValueError
                 break
             except ValueError:
-                print("Debe escribir un número.")
-        return location
-
-    def validate_location(self):
-        word = self.get_word()
-
-        if self.game.board.is_empty() == True:
-            while True:
-                location = self.get_location()
-                if location[0] == 7 and location[1] <= 7 and (location[1]+(len(word)-1)) >= 7:
-                    break
-                if location[1] == 7 and location[0] <= 7 and (location[0]+(len(word)-1)) >= 7:
-                    break
-                else:
-                    location = []
-                    print("Debe comenzar pasando por el centro...")
-        elif self.game.board.is_empty() == False:
-            location = self.get_location()
+                print("Ubicación inválida.")
+                location = []
         return word,location
 
     def get_orientation(self):
-        word, location = self.validate_location()
+        word, location = self.get_location()
         while True:
             orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
             orientation = orientation.upper()
@@ -101,23 +94,18 @@ class Main:
                     break
                 elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
                     print('Recuerde pase por el centro...')
-                # elif location[1] == 7 and orientation != 'V':
-                #     print('Recuerde pase por el centro...')
                 else:
                     break
             else:
                 break
         return word,location,orientation
 
-    def get_args(self):
-        return self.get_orientation()
-
     def play(self):
         if self.game.board.is_empty() == True:
             print("Recuerde que para comenzar el juego, debe iniciar con una palabra que pase por el centro del tablero.")
         else:
             print('La palabra debe cruzar con otra palabra.')
-        word, location, orientation = self.get_args()
+        word, location, orientation = self.get_orientation()
         if self.game.validate_word(word,location,orientation) == True:
             self.game.put_word(word,location,orientation)
             self.game.score_sum(word,location,orientation)
@@ -185,9 +173,9 @@ class Main:
 
         while True:
             exchange = self.get_letters_to_change()
-            if self.game.board.validate_word_and_letters(word=exchange,player_tiles=self.get_just_letter_player()) == False:
+            if self.game.board.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == False:
                 print("No tienes esas letras para intercambiar. Prueba nuevamente.")
-            elif self.game.board.validate_word_and_letters(word=exchange,player_tiles=self.get_just_letter_player()) == True:
+            elif self.game.board.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == True:
                 break
 
         tiles = self.get_tiles_to_change(exchange)
@@ -247,11 +235,10 @@ class Main:
             except ValueError:
                 print('Opcion invalida. Elegir (1;2;3;4).')
 
-
     def main(self):
         while self.game_status is True:
             self.print_menu()
-            opcion = self.get_opcion()
+            opcion = self.get_opcion()              
 
             if opcion == 1:
                 self.play()
