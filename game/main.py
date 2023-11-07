@@ -42,61 +42,12 @@ class Main:
         print(f"Turno del jugardor {self.game.current_player.nickname}. Puntaje de {self.game.current_player.nickname}: {self.game.current_player.score}.\n Sus fichas son:\n                                          {player_tiles}\n")
         print('                  ','1- Jugar','   ','2- Intercambiar fichas','   ','3- Pasar','   ','4- Rendirse','\n')
 
-
-    def get_word(self):
-        try:
-            word = str(input("¿Qué palabra quiere agregar al tablero?: "))
-            word = word.upper()
-            num = int(len(word))
-            return word, num     
-        except ValueError:
-            print("Escriba una palabra por favor.")
-
-    def get_location(self):
-        word,num = self.get_word() # type: ignore
-        location= []
-        while True:
-            try:
-                location_row = (int(input("¿En qué fila quiere poner la palabra?(0-14): ")))
-                location_column = (int(input("¿En qué columna quiere que comience la plabra?(0-14): ")))
-                location = [location_row,location_column]
-                if location_column is str or location_row is str:
-                    raise ValueError
-                elif self.game.board.is_empty() == True:
-                    if location[0] > 7 or location[1] > 7:
-                        raise ValueError
-                    elif location[0] == 7 and location[1] <= 7 and (location[1]+(num)) <= 7 or location[1] == 7 and location[0] <= 7 and (location[0]+(num)) <= 7:
-                        raise ValueError
-                break
-            except ValueError:
-                print("Ubicación inválida.")
-                location = []
-        return word,location
-
-    def get_orientation(self):
-        word, location = self.get_location()
-        while True:
-            orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
-            orientation = orientation.upper()
-            if orientation != 'H' and orientation != 'V':
-                print('Debe escribir solo la letra H o V.')
-            elif self.game.board.is_empty() == True:
-                if location[0] == 7 and location[1] == 7:
-                    break
-                elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
-                    print('Recuerde pase por el centro...')
-                else:
-                    break
-            else:
-                break
-        return word,location,orientation
-
     def play(self):
         if self.game.board.is_empty() == True:
             print("Recuerde que para comenzar el juego, debe iniciar con una palabra que pase por el centro del tablero.")
         else:
             print('La palabra debe cruzar con otra palabra.')
-        word, location, orientation = self.get_orientation()
+        word, location, orientation = self.game.get_orientation()
         if self.game.validate_word(word,location,orientation) == True:
             self.game.put_word(word,location,orientation)
             self.game.score_sum(word,location,orientation)
@@ -123,7 +74,6 @@ class Main:
 
     def get_letters_to_change(self):
         exchange = []
-
         while True:
             letter = str(input("¿Qué letra quiere intercambiar? Escriba solo la letra: "))
             letter = letter.upper()
@@ -131,24 +81,25 @@ class Main:
             answ = self.ask_if_repeat_change()
             if answ == 'NO':
                 break
-
         return exchange
 
-    def get_tiles_to_change(self,exchange):
+    def get_tiles_to_change_much(self,exchange):
         tiles = []
-        if len(exchange) > 1:
-            for i in range(len(exchange)):
-                for x in range(len(self.game.current_player.tiles)):
-                    if exchange[i] == self.game.current_player.tiles[x].letter:
-                        tiles.append(self.game.current_player.tiles[x])
-                        del self.game.current_player.tiles[x]
-                        break
-        elif len(exchange) == 1:
+        for i in range(len(exchange)):
             for x in range(len(self.game.current_player.tiles)):
-                if exchange[0] == self.game.current_player.tiles[x].letter:
+                if exchange[i] == self.game.current_player.tiles[x].letter:
                     tiles.append(self.game.current_player.tiles[x])
                     del self.game.current_player.tiles[x]
                     break
+        return tiles
+
+    def get_tiles_to_change_one(self,exchange):
+        tiles = []
+        for x in range(len(self.game.current_player.tiles)):
+            if exchange[0] == self.game.current_player.tiles[x].letter:
+                tiles.append(self.game.current_player.tiles[x])
+                del self.game.current_player.tiles[x]
+                break
         return tiles
 
     def get_just_letter_player(self):
@@ -157,25 +108,25 @@ class Main:
             if tiles[i].letter == '?':
                 del tiles[i]
         return tiles
-
-    def validate_and_get_tiles_to_change(self):
+    
+    def change_tiles(self):
         exchange = []
-
         while True:
             exchange = self.get_letters_to_change()
-            if self.game.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == False:
+            if self.game.validate_word_and_letters_change(exchange, player_tiles=self.get_just_letter_player()) == False:
                 print("No tienes esas letras para intercambiar. Prueba nuevamente.")
-            elif self.game.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == True:
+            elif self.game.validate_word_and_letters_change(exchange, player_tiles=self.get_just_letter_player()) == True:
                 break
-
-        tiles = self.get_tiles_to_change(exchange)
-        return tiles
-
-    def change_tiles(self):
-        tiles = self.validate_and_get_tiles_to_change()
-        self.game.bag_tiles.put(tiles)
-        self.game.refill_player_tiles()
-        self.game.next_turn()
+        if len(exchange) > 1:
+            tiles = self.get_tiles_to_change_much(exchange)
+            self.game.bag_tiles.put(tiles)
+            self.game.refill_player_tiles()
+            self.game.next_turn()
+        elif len(exchange) == 1:
+            tiles = self.get_tiles_to_change_one(exchange)
+            self.game.bag_tiles.put(tiles)
+            self.game.refill_player_tiles()
+            self.game.next_turn()
 
     def pass_turn(self):
         self.split2()

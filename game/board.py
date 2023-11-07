@@ -111,7 +111,8 @@ class Board:
         word_return = list.copy(word)
         word_copy = list.copy(word)
         for i in range(len(word_copy)):
-            if self.grid[int(location[0])][int((location[1] + i))].tile.letter == word_copy[i]:
+            letter = self.grid[int(location[0])][int((location[1] + i))].tile.letter
+            if letter == word_copy[i]:
                 word_return.remove(word_copy[i])
         return word_return
 
@@ -119,7 +120,8 @@ class Board:
         word_return = list.copy(word)
         word_copy = list.copy(word)
         for i in range(len(word_copy)):
-            if self.grid[int((location[0] + i))][int(location[1])].tile.letter == word_copy[i]:
+            cell = self.grid[int((location[0] + i))][int(location[1])].tile.letter
+            if cell == word_copy[i]:
                 word_return.remove(word_copy[i])
         return word_return
 

@@ -69,19 +69,68 @@ class ScrabbleGame:
         word_letters = list(word)
         self.wild_tile_to_end()
         word = self.dic.remove_accents(word)
+        answ = True
         if self.dic.verify_word(word) == False:
             print('La palabra no existe.')
-            return False
+            answ = False
         if self.board.validate_word_inside_board(word_letters,location,orientation) == False:
             print('La palabra no entra en el tablero.')
-            return False
+            answ = False
         if self.board.validate_word_and_letters_play(word_letters,location,orientation,player_tiles) == False:
             print('No tienes las letras para formar la plabra.')
-            return False
+            answ = False
         if self.board.is_empty() == False:
-            return self.board.validate_word_board_not_empty(word_letters,location,orientation) 
+            answ = self.board.validate_word_board_not_empty(word_letters,location,orientation) 
         else:
-            return True
+            return answ
+
+    def get_word(self):
+        try:
+            word = str(input("¿Qué palabra quiere agregar al tablero?: "))
+            word = word.upper()
+            num = int(len(word))
+            return word, num     
+        except ValueError:
+            print("Escriba una palabra por favor.")
+
+    def get_location(self):
+        word,num = self.get_word() # type: ignore
+        location= []
+        while True:
+            try:
+                location_row = (int(input("¿En qué fila quiere poner la palabra?(0-14): ")))
+                location_column = (int(input("¿En qué columna quiere que comience la plabra?(0-14): ")))
+                location = [location_row,location_column]
+                if location_column is str or location_row is str:
+                    raise ValueError
+                elif self.board.is_empty() == True:
+                    if location[0] > 7 or location[1] > 7:
+                        raise ValueError
+                    elif location[0] == 7 and location[1] <= 7 and (location[1]+(num)) <= 7 or location[1] == 7 and location[0] <= 7 and (location[0]+(num)) <= 7:
+                        raise ValueError
+                break
+            except ValueError:
+                print("Ubicación inválida.")
+                location = []
+        return word,location
+
+    def get_orientation(self):
+        word, location = self.get_location()
+        while True:
+            orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
+            orientation = orientation.upper()
+            if orientation != 'H' and orientation != 'V':
+                print('Debe escribir solo la letra H o V.')
+            elif self.board.is_empty() == True:
+                if location[0] == 7 and location[1] == 7:
+                    break
+                elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
+                    print('Recuerde pase por el centro...')
+                else:
+                    break
+            else:
+                break
+        return word,location,orientation
 
     def put_word(self,word,location,orientation):
         word = list(word)
