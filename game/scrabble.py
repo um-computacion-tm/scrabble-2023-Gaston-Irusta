@@ -54,6 +54,16 @@ class ScrabbleGame:
         tiles.extend(self.bag_tiles.take(int(7-(len(self.current_player.tiles)))))
         self.current_player.tiles = tiles
 
+    def validate_word_and_letters_change(self,exchange,player_tiles):
+        n = 0
+        for j in range(len(exchange)):
+            for y in range(len(player_tiles)):
+                if exchange[j] == player_tiles[y].letter:
+                    n += 1
+                    del player_tiles[y]
+                    break
+        return self.board.verify_n(exchange,n)
+
     def validate_word(self,word,location,orientation):
         player_tiles = list.copy(self.current_player.tiles)
         word_letters = list(word)

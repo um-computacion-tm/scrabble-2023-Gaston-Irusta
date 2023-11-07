@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [0.2.8] - 2023-11-07
+## Added
+# I have so much problems with the patch, just one test runs. I fixed some cognitive problems.
+
 ## [0.2.7] - 2023-11-01
 ## Added
 # I added a method to verify which letters are on the board so that the player is not asked for them when putting a word on the board.

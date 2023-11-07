@@ -62,7 +62,8 @@ class Board:
             c4 += 8
             c5 += 2
 
-    def build_board(self):
+    def print_board(self):
+        print ('                ' , '  0    1    2    3    4    5    6    7    8    9   10   11   12   13   14\n')
         boardRow = ''
         for i in range(15):
             for j in range(15):
@@ -79,14 +80,10 @@ class Board:
                 else:
                     boardRow += '|  ' + self.grid[i][j].tile.letter + ' |'
             if (i+1) <= 10:
-                print ('                ',str(i),' ',boardRow)
+                print ('                ', boardRow, ' ', str(i))
             else:
-                print ('               ',str(i),' ',boardRow)
+                print ('                ', boardRow,'', str(i))
             boardRow = ''
-
-    def print_board(self):
-        print ('                    ' , '  0    1    2    3    4    5    6    7    8    9    10   11   12   13   14\n')
-        self.build_board()
         print('\n')
 
     def validate_word_inside_board(self, word, location, orientation):
@@ -146,16 +143,6 @@ class Board:
                     del player_tiles[x]
                     break
         return self.verify_n(word,n)
-
-    def validate_word_and_letters_change(self,exchage,player_tiles):
-        n = 0
-        for j in range(len(exchage)):
-            for y in range(len(player_tiles)):
-                if exchage[j] == player_tiles[y].letter:
-                    n += 1
-                    del player_tiles[y]
-                    break
-        return self.verify_n(exchage,n)
 
     def validate_place_board_not_empty(self,word,location,orientation):
         cross = False

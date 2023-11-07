@@ -121,6 +121,20 @@ class TestScrabbleGame(unittest.TestCase):
         scrabble_game.refill_player_tiles()
         self.assertEqual(len(scrabble_game.current_player.tiles),7)
 
+    def test_validate_word_and_letters_change(self):
+        scrabble_game = ScrabbleGame(2)
+        exchange = ['A','C','F']
+        player_tiles = [
+            Tile('A',1),
+            Tile('O',1),
+            Tile('C',2),
+            Tile('R',1),
+            Tile('T',1),
+            Tile('F',1),
+            Tile('G',1),
+        ]
+        self.assertEqual(scrabble_game.validate_word_and_letters_change(exchange,player_tiles),True)
+
     def test_validate_word_True(self):
         scrabble_game = ScrabbleGame(players_count= 3)
         scrabble_game.current_player = scrabble_game.players[0]

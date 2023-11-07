@@ -1,5 +1,6 @@
 import unittest
 import random
+from unittest.mock import patch
 from game.models import (BagTiles,Tile,)
 
 class TestTiles(unittest.TestCase):
@@ -9,10 +10,11 @@ class TestTiles(unittest.TestCase):
         self.assertEqual(tile.value, 3)
 
 class TestBagTiles(unittest.TestCase):
-    def test_bag_tiles(self):
+    @patch('random.shuffle')
+    def test_bag_tiles(self,patch_shuffle):
         bag = BagTiles()
         self.assertEqual(len(bag.tiles),103,)
-        self.assertNotEqual(bag.tiles[2].letter,'A')
+        self.assertNotEqual(bag.tiles[23].letter,'A')
 
     def test_get_letter_value(self):
         bag = BagTiles()

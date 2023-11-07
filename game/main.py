@@ -5,8 +5,7 @@ class Main:
     def __init__(self):
         os.system('clear')
         print("¡¡¡ WELCOME TO SCRABBLE !!!")
-        self.players_count = self.get_player_count()
-        self.game = ScrabbleGame(self.players_count)
+        self.game = ScrabbleGame(self.get_player_count())
         self.players_nicknames()
         self.game_status = True       
 
@@ -19,18 +18,12 @@ class Main:
 
     def get_player_count(self):
         while True:
-            num_players = int(input("Ingrese la cantidad de jugadores: "))
-            if self.validate_player_count(num_players) is True:
-                return num_players
-            else:
-                print("Valor invalido, elgir entre 2-4 jugadores.")
-
-    def validate_player_count(self,player_count):
-        try:
-            if 2 <= int(player_count) <= 4 :
-                return True
-        except ValueError:
-                return False
+            try:
+                players_count = int(input("Ingrese la cantidad de jugadores: "))
+                if 2 <= players_count <= 4:
+                    return players_count
+            except Exception as e:
+                print(e,'Ingrese un número entre 2-4 por favor.')
         
     def players_nicknames(self):
         print("Cantidad de jugadores: ", len(self.game.players))
@@ -72,9 +65,7 @@ class Main:
                 elif self.game.board.is_empty() == True:
                     if location[0] > 7 or location[1] > 7:
                         raise ValueError
-                    elif location[0] == 7 and location[1] <= 7 and (location[1]+(num)) <= 7:
-                        raise ValueError
-                    elif location[1] == 7 and location[0] <= 7 and (location[0]+(num)) <= 7:
+                    elif location[0] == 7 and location[1] <= 7 and (location[1]+(num)) <= 7 or location[1] == 7 and location[0] <= 7 and (location[0]+(num)) <= 7:
                         raise ValueError
                 break
             except ValueError:
@@ -111,16 +102,15 @@ class Main:
             self.game.score_sum(word,location,orientation)
             self.game.refill_player_tiles()
             self.game.next_turn()
-
+            os.system('clear')
 
     def ask_if_repeat_change(self):
         answ = None
-
         while True:
             try:
                 answ = str(input("¿Quiere intercambiar otra letra más? Si/No: "))
                 answ = answ.upper()
-                if answ == 'SI':
+                if answ == 'SI' or answ == 'NO':
                     break
                 elif answ == 'NO':
                     break
@@ -173,9 +163,9 @@ class Main:
 
         while True:
             exchange = self.get_letters_to_change()
-            if self.game.board.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == False:
+            if self.game.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == False:
                 print("No tienes esas letras para intercambiar. Prueba nuevamente.")
-            elif self.game.board.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == True:
+            elif self.game.validate_word_and_letters_change(exchange,player_tiles=self.get_just_letter_player()) == True:
                 break
 
         tiles = self.get_tiles_to_change(exchange)
@@ -235,14 +225,13 @@ class Main:
             except ValueError:
                 print('Opcion invalida. Elegir (1;2;3;4).')
 
-    def main(self):
+    def main_menu(self):
         while self.game_status is True:
             self.print_menu()
             opcion = self.get_opcion()              
 
             if opcion == 1:
                 self.play()
-                os.system('clear')
             elif opcion == 2:
                 self.change_tiles()
                 os.system('clear')
@@ -256,9 +245,7 @@ class Main:
                     self.surrender_2_players()
                 elif len(self.game.players) > 2:
                     self.surrender()
-                os.system('clear')
 
 
 if __name__ == '__main__':
-    main = Main()
-    main.main()
+    Main().main_menu()
