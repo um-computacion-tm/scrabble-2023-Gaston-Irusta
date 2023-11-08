@@ -120,10 +120,12 @@ class ScrabbleGame:
                 if orientation != 'H' and orientation != 'V':
                     print('Debe escribir solo la letra H o V.')
                 elif self.board.is_empty() == True:
-                    if location[0] == 7 and location[1] == 7:
+                    if location[0] == 7 or location[1] == 7:
                         break
                     elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
                         raise ValueError
+                    else:
+                        break
                 else:
                     break
             except ValueError:
