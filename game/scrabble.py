@@ -89,10 +89,11 @@ class ScrabbleGame:
         num = int(len(word))
         return word, num     
  
-    def get_checks(self,location,num):
-        check_H = location[0] == 7 and location[1] < 7 and (location[1]+(num)) <= 7
-        check_V = location[1] == 7 and location[0] < 7 and (location[0]+(num)) <= 7
+    def get_check(self,location,num):
+        check_H=location[0] == 7 and (location[1]+(num)) <= 7
+        check_V=location[1] == 7 and (location[0]+(num)) <= 7
         return check_H, check_V
+
     def get_location(self):
         word,num = self.get_word() # type: ignore
         location= []
@@ -101,7 +102,7 @@ class ScrabbleGame:
                 location_row = (int(input("¿En qué fila quiere poner la palabra?(0-14): ")))
                 location_column = (int(input("¿En qué columna quiere que comience la plabra?(0-14): ")))
                 location = [location_row,location_column]
-                check_H, check_V = self.get_checks(location,num)
+                check_H, check_V = self.get_check(location,num)
                 if location_column is str or location_row is str:
                     raise ValueError
                 elif self.board.is_empty() == True:
