@@ -103,8 +103,12 @@ class ScrabbleGame:
                 elif self.board.is_empty() == True:
                     if location[0] > 7 or location[1] > 7:
                         raise ValueError
-                    elif location[0] == 7 and location[1] <= 7 and (location[1]+(num)) <= 7 or location[1] == 7 and location[0] <= 7 and (location[0]+(num)) <= 7:
-                        raise ValueError
+                    elif location[0] == 7:
+                        if location[1] < 7 and (location[1]+(num)) <= 7:
+                            raise ValueError
+                    elif location[1] == 7:
+                        if location[0] <= 7 and (location[0]+(num)) <= 7:
+                            raise ValueError
                 break
             except ValueError:
                 print("Ubicación inválida.")
@@ -113,24 +117,22 @@ class ScrabbleGame:
 
     def get_orientation(self):
         word, location = self.get_location()
-        while True:
-            try:
-                orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
-                orientation = orientation.upper()
-                if orientation != 'H' and orientation != 'V':
-                    print('Debe escribir solo la letra H o V.')
-                elif self.board.is_empty() == True:
-                    if location[0] == 7 or location[1] == 7:
-                        break
-                    elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
-                        raise ValueError
-                    else:
-                        break
+        try:
+            orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
+            orientation = orientation.upper()
+            if orientation != 'H' and orientation != 'V':
+                print('Debe escribir solo la letra H o V.')
+            elif self.board.is_empty() == True:
+                if location[0] == 7 or location[1] == 7:
+                    return word,location,orientation
+                elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
+                    raise ValueError
                 else:
-                    break
-            except ValueError:
+                    return word,location,orientation
+            else:
+                return word,location,orientation
+        except ValueError:
                 print('Recuerde pase por el centro...')
-        return word,location,orientation
 
     def put_word(self,word,location,orientation):
         word = list(word)
