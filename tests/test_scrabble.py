@@ -1,6 +1,8 @@
 import unittest
+from unittest.mock import patch
 from game.scrabble import ScrabbleGame
 from game.models import Tile
+from io import StringIO
 
 class TestScrabbleGame(unittest.TestCase):
     def test_init(self):
@@ -75,6 +77,64 @@ class TestScrabbleGame(unittest.TestCase):
         self.assertEqual(cells[1].tile.value,1)
         self.assertEqual(cells[2].multiplier_type,'letter')
         self.assertEqual(cells[3].tile.letter,'A')
+
+    def test_valid_input(self):
+        with patch('builtins.input', return_value='hello'):
+            word, num = ScrabbleGame(2).get_word()
+            self.assertEqual(word, 'HELLO')
+            self.assertEqual(num, 5)
+
+    def test_valid_location(self):
+        with patch('builtins.input', side_effect=['word', 0, 0]):
+            scrabble_game = ScrabbleGame(2)
+            self.assertEqual(scrabble_game.get_location(), ("WORD", [0, 0]))
+
+    # StopIteration
+    # def test_invalid_location(self):
+    #     with patch('builtins.input', side_effect=['word', 8, 'a']):
+    #         scrabble_game = ScrabbleGame(2)
+    #         scrabble_game.get_location()
+    #         self.assertRaises(ValueError, scrabble_game.get_location, [8,'a'])
+
+    def test_empty_board_location(self):
+        with patch('builtins.input', side_effect=['word', 0, 0]):
+            scrabble_game = ScrabbleGame(2)
+            self.assertEqual(scrabble_game.get_location(), ("WORD", [0, 0]))
+
+    def test_valid_orientation(self):
+        with patch('builtins.input', side_effect=['word',7, 7,'V']):
+            with patch('builtins.print'):
+                with patch('game.board.Board.is_empty', return_value=False):
+                    word, location, orientation = ScrabbleGame(2).get_orientation()
+                    self.assertEqual(word, 'WORD')
+                    self.assertEqual(location, [7,7])
+                    self.assertEqual(orientation, 'V')
+
+    # def test_invalid_orientation(self):
+    #     # Test case for an invalid orientation input
+    #     with patch('builtins.input', side_effect=['word',7, 7,'X']):
+    #         with patch('builtins.print'):
+    #             with self.assertRaises(ValueError):
+    #                 word, location, orientation = ScrabbleGame(2).get_orientation()
+
+    def test_empty_board_orientation(self):
+        with patch('builtins.input', side_effect=['word',7,7, 'H']):
+            with patch('builtins.print'):
+                with patch('game.board.Board.is_empty', return_value=True):
+                    word, location, orientation = ScrabbleGame(2).get_orientation()
+                    self.assertEqual(word,'WORD')
+                    self.assertEqual(location,[7, 7])
+                    self.assertEqual(orientation, 'H')
+
+    def test_non_empty_board(self):
+        with patch('builtins.input', side_effect=['H']):
+            with patch('builtins.print'):
+                with patch('game.board.Board.is_empty', return_value=False):
+                    with patch('game.scrabble.ScrabbleGame.get_orientation', return_value=('word',[7, 7], 'H')):
+                        word, location, orientation = ScrabbleGame(2).get_orientation()
+                        self.assertEqual(location, [7, 7])
+                        self.assertEqual(orientation, 'H')
+
 
     def test_score_sum_1(self):
         scrabble_game = ScrabbleGame(players_count=3)

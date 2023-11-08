@@ -7,7 +7,7 @@ class Main:
         print("¡¡¡ WELCOME TO SCRABBLE !!!")
         self.game = ScrabbleGame(self.get_player_count())
         self.players_nicknames()
-        self.game_status = True       
+        self.game_status = True
 
     def split1(self):
         print ('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n')
@@ -43,10 +43,6 @@ class Main:
         print('                  ','1- Jugar','   ','2- Intercambiar fichas','   ','3- Pasar','   ','4- Rendirse','\n')
 
     def play(self):
-        if self.game.board.is_empty() == True:
-            print("Recuerde que para comenzar el juego, debe iniciar con una palabra que pase por el centro del tablero.")
-        else:
-            print('La palabra debe cruzar con otra palabra.')
         word, location, orientation = self.game.get_orientation()
         if self.game.validate_word(word,location,orientation) == True:
             self.game.put_word(word,location,orientation)
@@ -62,8 +58,6 @@ class Main:
                 answ = str(input("¿Quiere intercambiar otra letra más? Si/No: "))
                 answ = answ.upper()
                 if answ == 'SI' or answ == 'NO':
-                    break
-                elif answ == 'NO':
                     break
                 else:
                     raise ValueError
@@ -129,12 +123,12 @@ class Main:
             self.game.next_turn()
 
     def pass_turn(self):
-        self.split2()
         self.game.next_turn()
 
     def surrender_2_players(self):
             self.game.next_turn()
             print(f'Ha ganado {self.game.current_player.nickname}!')
+            self.game.next_turn()
             self.game_status = False
 
     def surrender(self):
@@ -196,6 +190,10 @@ class Main:
                     self.surrender_2_players()
                 elif len(self.game.players) > 2:
                     self.surrender()
+        self.split2()
+        print('¡Gracias por jugar!')
+        self.split2()
+
 
 
 if __name__ == '__main__':

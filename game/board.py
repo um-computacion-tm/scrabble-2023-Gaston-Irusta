@@ -116,13 +116,14 @@ class Board:
                 word_return.remove(word_copy[i])
         return word_return
 
-    def use_letter_on_board_V(self,word,location):
+    def use_letter_on_board_V(self, word, location):
         word_return = list.copy(word)
         word_copy = list.copy(word)
         for i in range(len(word_copy)):
-            cell = self.grid[int((location[0] + i))][int(location[1])].tile.letter
-            if cell == word_copy[i]:
-                word_return.remove(word_copy[i])
+            if int(location[0]) + i < len(self.grid):
+                cell = self.grid[int(location[0]) + i][int(location[1])].tile.letter
+                if cell == word_copy[i]:
+                    word_return.remove(word_copy[i])
         return word_return
 
     def use_letter_on_board(self,word,location,orientation):

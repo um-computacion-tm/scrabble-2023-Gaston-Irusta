@@ -81,17 +81,14 @@ class ScrabbleGame:
             answ = False
         if self.board.is_empty() == False:
             answ = self.board.validate_word_board_not_empty(word_letters,location,orientation) 
-        else:
-            return answ
+        return answ
 
     def get_word(self):
-        try:
-            word = str(input("¿Qué palabra quiere agregar al tablero?: "))
-            word = word.upper()
-            num = int(len(word))
-            return word, num     
-        except ValueError:
-            print("Escriba una palabra por favor.")
+        word = str(input("¿Qué palabra quiere agregar al tablero?: "))
+        word = word.upper()
+        num = int(len(word))
+        return word, num     
+ 
 
     def get_location(self):
         word,num = self.get_word() # type: ignore
@@ -117,19 +114,20 @@ class ScrabbleGame:
     def get_orientation(self):
         word, location = self.get_location()
         while True:
-            orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
-            orientation = orientation.upper()
-            if orientation != 'H' and orientation != 'V':
-                print('Debe escribir solo la letra H o V.')
-            elif self.board.is_empty() == True:
-                if location[0] == 7 and location[1] == 7:
-                    break
-                elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
-                    print('Recuerde pase por el centro...')
+            try:
+                orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
+                orientation = orientation.upper()
+                if orientation != 'H' and orientation != 'V':
+                    print('Debe escribir solo la letra H o V.')
+                elif self.board.is_empty() == True:
+                    if location[0] == 7 and location[1] == 7:
+                        break
+                    elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
+                        raise ValueError
                 else:
                     break
-            else:
-                break
+            except ValueError:
+                print('Recuerde pase por el centro...')
         return word,location,orientation
 
     def put_word(self,word,location,orientation):

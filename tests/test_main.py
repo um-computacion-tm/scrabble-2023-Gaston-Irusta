@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch
 from game.main import Main
+from game.models import Tile
 from game.scrabble import ScrabbleGame
 
 class TestMain(unittest.TestCase):
@@ -10,23 +11,55 @@ class TestMain(unittest.TestCase):
         num = main.get_player_count()
         self.assertEqual(num, 2)
 
-    # @patch('builtins_input',side_effect=['gg','ff'])
-    # def test_player_nickname(self,mock_nickname):
-    #     main = Main()
-    #     main.game = ScrabbleGame(2)
-    #     main.players_nicknames()
-    #     self.assertEqual(main.game.players[0].nickname,'gg')
-    #     self.assertEqual(main.game.players[1].nickname,'ff')
+    def test_play_when_board_is_empty(self):
+        with patch('builtins.input', side_effect=[2,'','',1,'pato',7,7,'H',4]):
+            with patch('builtins.print'):
+                main = Main()
+                main.game.players[0].tiles = [
+                    Tile('P', 1),
+                    Tile('A', 1),
+                    Tile('T', 1),
+                    Tile('O', 1),
+                    Tile('C', 1),
+                    Tile('E', 1),
+                    Tile('G', 1),
+                ]
+                main.main_menu()
+                self.assertEqual(main.game.board.grid[7][7].tile.letter, 'P')
+    
+    def test_change_tiles(self):
+        with patch('builtins.input', side_effect=[2,'','',2,'p','si','a','no',2,'r','no',4]):
+            with patch('builtins.print'):
+                main = Main()
+                main.game.players[0].tiles = [
+                    Tile('P', 1),
+                    Tile('A', 1),
+                    Tile('T', 1),
+                    Tile('O', 1),
+                    Tile('C', 1),
+                    Tile('E', 1),
+                    Tile('G', 1),
+                ]
+                main.game.players[1].tiles = [
+                    Tile('R', 1),
+                    Tile('?', 0),
+                    Tile('T', 1),
+                    Tile('A', 1),
+                    Tile('S', 1),
+                    Tile('E', 1),
+                    Tile('G', 1),
+                ]
+                main.main_menu()
+                self.assertNotEqual(main.game.players[0].tiles[0].letter, 'P')
+                self.assertNotEqual(main.game.players[0].tiles[1].letter, 'A')
+                self.assertNotEqual(main.game.players[1].tiles[0].letter, 'R')
 
-    # @patch('game.main.Main.get_player_count',return_value=2)
-    # @patch('game.main.Main.players_nicknames', side_effect=['Player1', 'Player2'])
-    # @patch('game.main.Main.main_menu',return_value=4)
-    # def test_players_nicknames(self, mock_count, mock_nicknames, mock_opcion):
-    #     Main()
-    #     Main().players_nicknames()
-    #     self.assertEqual(Main().game.players[0].nickname, 'Player1')
-    #     self.assertEqual(Main().game.players[1].nickname, 'Player2')
-
+    def test_pass_turn(self):
+        with patch('builtins.input', side_effect=[2,'Player1','Player2',3,3,4]):
+            with patch('builtins.print'):
+                main = Main()
+                main.main_menu()
+                self.assertEqual(main.game.current_player.nickname, 'Player1')
 
 
 if __name__ == '__main__':
