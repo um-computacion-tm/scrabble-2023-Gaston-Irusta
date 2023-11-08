@@ -28,7 +28,7 @@ class TestMain(unittest.TestCase):
                 self.assertEqual(main.game.board.grid[7][7].tile.letter, 'P')
     
     def test_change_tiles(self):
-        with patch('builtins.input', side_effect=[2,'','',2,'p','si','a','no',2,'r','no',4]):
+        with patch('builtins.input', side_effect=[2,'','',2,'t','si','a','no',2,'r','no',4]):
             with patch('builtins.print'):
                 main = Main()
                 main.game.players[0].tiles = [
@@ -50,7 +50,7 @@ class TestMain(unittest.TestCase):
                     Tile('G', 1),
                 ]
                 main.main_menu()
-                self.assertNotEqual(main.game.players[0].tiles[0].letter, 'P')
+                self.assertNotEqual(main.game.players[0].tiles[2].letter, 'T')
                 self.assertNotEqual(main.game.players[0].tiles[1].letter, 'A')
                 self.assertNotEqual(main.game.players[1].tiles[0].letter, 'R')
 
