@@ -5,4 +5,4 @@ RUN git clone https://github.com/um-computacion-tm/scrabble-2023-Gaston-Irusta.g
 WORKDIR /scrabble-2023-Gaston-Irusta 
 RUN pip install -r requirements.txt
 
-CMD [ "sh", "-c", "coverage run -m unittest && coverage report -m && python -m main " ]
+CMD [ "sh", "-c", "coverage run -m unittest && coverage report -m && python -m game.main " ]
