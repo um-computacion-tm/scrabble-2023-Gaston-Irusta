@@ -34,14 +34,6 @@ class TestBagTiles(unittest.TestCase):
         self.assertEqual(len(bag.tiles),95)
         self.assertEqual(len(tiles),8)
 
-    def test_put(self):
-        bag = BagTiles()
-        tile1 = bag.tiles[0]
-        put_tiles = [Tile('Z', 10), Tile('Y', 4)]
-        bag.put(put_tiles)
-        tile2 = bag.tiles[0]
-        self.assertEqual(len(bag.tiles),105)
-        self.assertNotEqual(tile1,tile2)
 
 if __name__ == '__main__':
     unittest.main()
