@@ -45,6 +45,7 @@ class Main:
     def play(self):
         word, location, orientation = self.game.get_orientation()
         if self.game.validate_word(word,location,orientation) == True:
+            # ipdb.set_trace()
             self.game.put_word(word,location,orientation)
             self.game.score_sum(word,location,orientation)
             self.game.refill_player_tiles()

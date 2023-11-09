@@ -90,25 +90,24 @@ class ScrabbleGame:
         return word, num     
  
     def get_check(self,location,num):
-        check_H=location[0] == 7 and (location[1]+(num)) <= 7
-        check_V=location[1] == 7 and (location[0]+(num)) <= 7
-        return check_H, check_V
+        check=location[0] == 7 and (location[1]+(num)) <= 7 or location[1] == 7 and (location[0]+(num)) <= 7
+        return check
 
     def get_location(self):
-        word,num = self.get_word() # type: ignore
+        word,num = self.get_word() 
         location= []
         while True:
             try:
                 location_row = (int(input("¿En qué fila quiere poner la palabra?(0-14): ")))
                 location_column = (int(input("¿En qué columna quiere que comience la plabra?(0-14): ")))
                 location = [location_row,location_column]
-                check_H, check_V = self.get_check(location,num)
+                check = self.get_check(location,num)
                 if location_column is str or location_row is str:
                     raise ValueError
                 elif self.board.is_empty() == True:
                     if location[0] > 7 or location[1] > 7:
                         raise ValueError
-                    elif check_H or check_V:
+                    elif check:
                         raise ValueError
                 break
             except ValueError:
@@ -135,8 +134,10 @@ class ScrabbleGame:
         except ValueError:
                 print('Recuerde pase por el centro...')
 
+
     def put_word(self,word,location,orientation):
         word = list(word)
+        word_to_add = list.copy(word)
         word_tiles = []
         self.wild_tile_to_end()
         for i in range(len(word)):
@@ -149,6 +150,9 @@ class ScrabbleGame:
                     self.current_player.tiles[x].value = self.bag_tiles.get_letter_value(word[i])
                     self.current_player.tiles[x].letter = word[i]
                     word_tiles.append(self.current_player.tiles[x])
+                    break
+                else:
+                    word_tiles.append(Tile(word[i],self.bag_tiles.get_letter_value(word[i])))
                     break
         if self.board.is_empty() == True:
             self.board.add_word_empty_board(word_tiles,location,orientation)
