@@ -147,23 +147,23 @@ class Board:
                     break
         return self.verify_n(word,n)
 
-    def location_letter_H(self,location,i):
-        letter = self.grid[int(location[0])][int(location[1]+i)].tile.letter
-        return letter
-    def location_letter_V(self,location,i):
-        letter = self.grid[int(location[0]+i)][int(location[1])].tile.letter
+    def location_letter(self,location,orientation,i):
+        if orientation == 'H':
+            letter = self.grid[int(location[0])][int(location[1]+i)].tile.letter
+        elif orientation == 'V':
+            letter = self.grid[int(location[0]+i)][int(location[1])].tile.letter
         return letter
 
     def validate_place_board_not_empty(self,word,location,orientation):
         cross = False
         if orientation == 'H':
             for i in range(len(word)):
-                letter = self.location_letter_H(location,i)
+                letter = self.location_letter(location,orientation,i)
                 if letter != '':
                     cross = True
         elif orientation == 'V':
             for i in range(len(word)):
-                letter = self.location_letter_V(location,i)
+                letter = self.location_letter(location,orientation,i)
                 if letter != '':
                     cross = True    
         return cross
@@ -178,7 +178,7 @@ class Board:
         
     def validate_word_horizontal(self,list_word,location):
         for i in range(len(list_word)):
-            letter = self.location_letter_H(location,i)
+            letter = self.location_letter(location,orientation='H', i=i)
             if letter == '':
                 pass
             elif letter == list_word[i]:
@@ -190,7 +190,7 @@ class Board:
         
     def validate_word_vertical(self,list_word,location):
         for i in range(len(list_word)):
-            letter = self.location_letter_V(location,i)
+            letter = self.location_letter(location,orientation='V',i=i)
             if letter == '':
                 pass
             elif letter == list_word[i]:
@@ -219,7 +219,7 @@ class Board:
     
     def add_word_horizontal(self,word_tiles,location):
         for i in range(len(word_tiles)):
-            letter = self.location_letter_H(location,i)
+            letter = self.location_letter(location,orientation='H',i=i)
             if letter == '':
                 self.grid[int(location[0])][int(location[1]+i)].add_tile(word_tiles[i])
             elif letter != '' and letter == word_tiles[i].letter:
@@ -230,7 +230,7 @@ class Board:
 
     def add_word_vertical(self,word_tiles,location):
         for i in range(len(word_tiles)):
-            letter = self.location_letter_V(location,i)
+            letter = self.location_letter(location,orientation='V',i=i)
             if letter == '':
                 self.grid[int(location[0]+i)][int(location[1])].add_tile(word_tiles[i])
             elif letter != '' and letter == word_tiles[i].letter:
