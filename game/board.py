@@ -111,7 +111,7 @@ class Board:
         word_return = list.copy(word)
         word_copy = list.copy(word)
         for i in range(len(word_copy)):
-            letter = self.grid[int(location[0])][int((location[1] + i))].tile.letter
+            letter = self.location_letter(location,orientation='H',i=i)
             if letter == word_copy[i]:
                 word_return.remove(word_copy[i])
         return word_return
@@ -121,7 +121,7 @@ class Board:
         word_copy = list.copy(word)
         for i in range(len(word_copy)):
             if int(location[0]) + i < len(self.grid):
-                cell = self.grid[int(location[0]) + i][int(location[1])].tile.letter
+                cell = self.location_letter(location,orientation='V',i=i)
                 if cell == word_copy[i]:
                     word_return.remove(word_copy[i])
         return word_return
@@ -154,48 +154,20 @@ class Board:
             letter = self.grid[int(location[0]+i)][int(location[1])].tile.letter
         return letter
 
-    def validate_place_board_not_empty(self,word,location,orientation):
-        cross = False
-        if orientation == 'H':
-            for i in range(len(word)):
-                letter = self.location_letter(location,orientation,i)
-                if letter != '':
-                    cross = True
-        elif orientation == 'V':
-            for i in range(len(word)):
-                letter = self.location_letter(location,orientation,i)
-                if letter != '':
-                    cross = True    
+    def validate_place_board_not_empty(self, word, location, orientation):
+        cross = any(self.location_letter(location, orientation, i) != '' for i in range(len(word)))
         return cross
 
     def validate_word_board_not_empty(self,word,location,orientation):
         list_word = list(word)
         if self.validate_place_board_not_empty(word,location,orientation) == True:
-            if orientation == 'H':
-                return self.validate_word_horizontal(list_word,location)
-            elif orientation == 'V':
-                return self.validate_word_vertical(list_word,location)
+           return self.validate_word(list_word,location,orientation)
+
         
-    def validate_word_horizontal(self,list_word,location):
-        for i in range(len(list_word)):
-            letter = self.location_letter(location,orientation='H', i=i)
-            if letter == '':
-                pass
-            elif letter == list_word[i]:
-                pass
-            elif letter != list_word[i]:
-                print('La palabra que quiere poner no coincide con las letras de las otras palabras del tablero.')
-                return False
-        return True
-        
-    def validate_word_vertical(self,list_word,location):
-        for i in range(len(list_word)):
-            letter = self.location_letter(location,orientation='V',i=i)
-            if letter == '':
-                pass
-            elif letter == list_word[i]:
-                pass
-            elif letter != list_word[i]:
+    def validate_word(self, list_word, location, orientation):
+        for i, letter in enumerate(list_word):
+            board_letter = self.location_letter(location, orientation=orientation, i=i)
+            if board_letter != '' and board_letter != letter:
                 print('La palabra que quiere poner no coincide con las letras de las otras palabras del tablero.')
                 return False
         return True
