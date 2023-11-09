@@ -8,6 +8,8 @@ class Tile:
 class BagTiles:
     def __init__(self):
         self.tiles = [
+            Tile('?',0),
+            Tile('?',0),
             Tile('A',1),
             Tile('A',1),
             Tile('A',1),
@@ -26,7 +28,7 @@ class BagTiles:
             Tile('C',3),
             Tile('C',3),
             Tile('C',3),
-            Tile('CH',5),
+            Tile('C',3),
             Tile('D',2),
             Tile('D',2),
             Tile('D',2),
@@ -49,6 +51,7 @@ class BagTiles:
             Tile('G',2),
             Tile('H',4),
             Tile('H',4),
+            Tile('H',4),
             Tile('I',1),
             Tile('I',1),
             Tile('I',1),
@@ -60,7 +63,8 @@ class BagTiles:
             Tile('L',1),
             Tile('L',1),
             Tile('L',1),
-            Tile('LL',8),
+            Tile('L',1),
+            Tile('L',1),
             Tile('M',3),
             Tile('M',3),
             Tile('N',1),
@@ -86,7 +90,8 @@ class BagTiles:
             Tile('R',1),
             Tile('R',1),
             Tile('R',1),
-            Tile('RR',8),
+            Tile('R',1),
+            Tile('R',1),
             Tile('S',1),
             Tile('S',1),
             Tile('S',1),
@@ -109,6 +114,11 @@ class BagTiles:
         ]
         random.shuffle(self.tiles)
 
+    def get_letter_value(self,letter):
+        for tile in self.tiles:
+            if tile.letter == letter:
+                return tile.value
+
     def take(self, count):
         tiles = []
         for _ in range(count):
@@ -117,3 +127,4 @@ class BagTiles:
 
     def put(self, tiles):
         self.tiles.extend(tiles)
+        random.shuffle(self.tiles)

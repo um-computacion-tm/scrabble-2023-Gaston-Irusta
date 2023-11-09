@@ -3,6 +3,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [1.0.0] - 2023-11-08
+## Added
+# I've added tests for the main file. I moved some mothods from the main to the scrabble file, and tested them. I fixed problems with the
+# codeclimate, like cognitive level and some code lines copyed. The game has a 92% of succesfull coverage report, and it's finished.
+
+## [0.2.8] - 2023-11-07
+## Added
+# I have so much problems with the patch, just one test runs. I fixed some cognitive problems.
+
+## [0.2.7] - 2023-11-01
+## Added
+# I added a method to verify which letters are on the board so that the player is not asked for them when putting a word on the board.
+# Based on the word and location, it searches the board with that data for letters that match the letters in the word. If some letters
+# match, it removes them from the list of letters it asks the player, but if none of them match, it returns the same list and asks the
+# player to have all the letters. The method is tested and works.
+
+## [0.2.6] - 2023-10-31
+## Added
+# Added dictionary to check if the word the player wants to use exists. The method works with a local .txt file, looks for the word in
+# the file and returns True or False depending on whether it is in the file or not. I tested it and works correctly.
+
+## [0.2.5] - 2023-10-25
+## Added
+# I've fixed somo problems with the inputs, if it ask for an int and the player puts a str, or int in a str input. The game doesn't
+# crash. Fixed the problem with the option change tiles and the wild tiles, now if the player puts a wrong letter, the game doesn't
+# change the wild tile, it warns that the player doesn't have the tiles.
+
+## [0.2.4] - 2023-10-24
+## Added
+# I created the methods to the option change tiles in the main menu. The method asks the player to write the letter that wants to
+# change, then asks if the player wants to changer another tile, if the answer is yes, the method adds a tile to the list of letters
+# to change and asks again, but if the answer is no, the method continius with the validate and get tile. It validates if the player
+# has the tiles to change or not. Then takes the player's tiles and puts them into the bag tiles and takes others randomly to complete
+# the number of seven tiles to play. 
+
+## [0.2.3] - 2023-10-23
+## Added
+# I've added the tests to check if the game can put a word on the board when the player has wild tiles. I created methods to refill
+# the player's tiles and validate if the player's word crosses with another word placed on the board. The method to refill is used when
+# the player's turn ends and the player doesn't have 7 tiles. It also will be used in the option change tiles from the main menu. And
+# the method to validate the words that cross eachother will avoid that the player places a word in a random location. I made tests for
+# these methods and they word well.
+
+## [0.2.2] - 2023-10-22
+## Added
+# I've fixed some minor bugs. Added methods to get the value of a tile and move the wild tile to the player's end tile list. The first
+# method will be applied when the player uses a wild tile, it will search for the tile value with a letter form the word the player
+# wants to put on the board, then the wild tile will have the correct letter and value. The second method takes the wild tile from the
+# player's list of tiles and moves it to the end. It removes it and adds it back to the end of the list. Also, I tested to see if they
+# work correctly, and they do. Additionally, I have improved the Main class to make testing easier.
+
+## [0.2.1] - 2023-10-21
+## Added
+# The complex issue was fixed and now I've made a class main to make ir easier to test with the methods of the class. I also add the
+# score_sum to the main so it can show the score of the current player.
+
 ## [0.2.0] - 2023-10-20
 ## Added
 # In the next versions I'll be trying to fix the complex level issue, I had like 31 problems so I'm trying to fix then as soon as

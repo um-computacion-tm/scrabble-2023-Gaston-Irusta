@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 from game.board import Board
 from game.models import Tile
 
@@ -15,7 +16,7 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(board.grid[6][8].multiplier_type,'letter')
         self.assertEqual(board.grid[5][9].multiplier,3)
         self.assertEqual(board.grid[5][9].multiplier_type,'letter')
-    
+
     def test_H_True_word_inside_board(self):
         board = Board()
         word = "Facultad"
@@ -58,6 +59,85 @@ class TestBoard(unittest.TestCase):
         board.grid[7][7].add_tile(Tile('A',1))
         empty = board.is_empty()
         self.assertEqual(empty, False)
+
+    def test_use_letters_on_board(self):
+        board = Board()
+
+        board.grid[5][3].add_tile(Tile('G',1))
+        board.grid[5][4].add_tile(Tile('A',1))
+        board.grid[5][5].add_tile(Tile('T',1))
+        board.grid[5][6].add_tile(Tile('O',1))
+
+        board.grid[9][3].add_tile(Tile('C',1))
+        board.grid[9][4].add_tile(Tile('O',1))
+        board.grid[9][5].add_tile(Tile('C',1))
+        board.grid[9][6].add_tile(Tile('O',1))
+
+        word = 'CORCHO'
+        word = list(word)
+        location = [4,6]
+        word_return = board.use_letter_on_board_V(word,location)
+        self.assertNotEqual(word_return,word)
+
+    def test_validate_word_and_letters_play_True(self):
+        board = Board()
+        word = 'LENTO'
+        word = list(word)
+        player_tiles = [
+            Tile('L',1),
+            Tile('E',1),
+            Tile('N',1),
+            Tile('T',1),
+            Tile('O',1),
+            Tile('S',1),
+            Tile('A',1),
+        ]
+        location = [5,7]
+        orientation = 'V'
+        valid = board.validate_word_and_letters_play(word,location,orientation,player_tiles)
+        self.assertEqual(valid,True)
+
+    def test_validate_word_and_letters_play_False(self):
+        board = Board()
+        word = 'PUNTO'
+        word = list(word)
+        player_tiles = [
+            Tile('L',1),
+            Tile('E',1),
+            Tile('N',1),
+            Tile('T',1),
+            Tile('O',1),
+            Tile('S',1),
+            Tile('A',1),
+        ]
+        location = [7,5]
+        orientation = 'H'
+        valid = board.validate_word_and_letters_play(word,location,orientation,player_tiles)
+        self.assertEqual(valid,False)
+
+    def test_validate_place_board_not_empty_H(self):
+        board = Board()
+        board.grid[5][7].add_tile(Tile('L',1))
+        board.grid[6][7].add_tile(Tile('O',1))
+        board.grid[7][7].add_tile(Tile('S',1))
+        board.grid[8][7].add_tile(Tile('A',1))
+        word = 'APESTA'
+        location = (7,2)
+        orientation = 'H'
+        valid = board.validate_place_board_not_empty(word,location,orientation)
+        self.assertEqual(valid,True)
+
+    def test_validate_place_board_not_empty_V(self):
+        board = Board()
+        board.grid[7][5].add_tile(Tile('L',1))
+        board.grid[7][6].add_tile(Tile('O',1))
+        board.grid[7][7].add_tile(Tile('S',1))
+        board.grid[7][8].add_tile(Tile('A',1))
+        word = 'RESTA'
+        location = (3,8)
+        orientation = 'V'
+        valid = board.validate_place_board_not_empty(word,location,orientation)
+        self.assertEqual(valid,True)       
 
     def test_validate_word_board_not_empty_H_True(self):
         board = Board()

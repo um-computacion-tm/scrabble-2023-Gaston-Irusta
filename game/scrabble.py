@@ -1,10 +1,12 @@
 from game.board import Board
 from game.player import Player
-from game.models import BagTiles
+from game.models import BagTiles, Tile
 from game.tools import Tools
+from game.dictionary import Dictionary
 
 class ScrabbleGame:
     def __init__(self, players_count):
+        self.dic = Dictionary()
         self.tools = Tools()
         self.board = Board()
         self.bag_tiles = BagTiles()
@@ -37,35 +39,120 @@ class ScrabbleGame:
         cells = self.list_cells(word,location,orientation)
         self.current_player.score = self.current_player.score + self.tools.calculate_word_value(cells)
 
-    def validate_word(self,word,location,orientation):
-        player_tiles = self.current_player.tiles
-        word = list(word)
+    def wild_tile_to_end(self):
+        tiles = self.current_player.tiles
         n = 0
-        for i in range(len(word)):
-            for x in range(len(player_tiles)):
-                if word[i] == player_tiles[x].letter:
+        for i in range(len(tiles)):
+            if tiles[i].letter == '?':
+                n += 1
+                del tiles[i]
+                tiles.append(Tile('?',0))
+        self.current_player.tiles = tiles
+
+    def refill_player_tiles(self):
+        tiles = self.current_player.tiles
+        tiles.extend(self.bag_tiles.take(int(7-(len(self.current_player.tiles)))))
+        self.current_player.tiles = tiles
+
+    def validate_word_and_letters_change(self,exchange,player_tiles):
+        n = 0
+        for j in range(len(exchange)):
+            for y in range(len(player_tiles)):
+                if exchange[j] == player_tiles[y].letter:
                     n += 1
-                    del player_tiles[x]
+                    del player_tiles[y]
                     break
-        if n != len(word):
-            return False
-        if self.board.validate_word_inside_board(word,location,orientation) == True:
-            pass
-        else:
-            return False
+        return self.board.verify_n(exchange,n)
+
+    def validate_word(self,word,location,orientation):
+        player_tiles = list.copy(self.current_player.tiles)
+        word_letters = list(word)
+        self.wild_tile_to_end()
+        word = self.dic.remove_accents(word)
+        answ = True
+        if self.dic.verify_word(word) == False:
+            print('La palabra no existe.')
+            answ = False
+        if self.board.validate_word_inside_board(word_letters,location,orientation) == False:
+            print('La palabra no entra en el tablero.')
+            answ = False
+        if self.board.validate_word_and_letters_play(word_letters,location,orientation,player_tiles) == False:
+            print('No tienes las letras para formar la plabra.')
+            answ = False
         if self.board.is_empty() == False:
-            return self.board.validate_word_board_not_empty(word,location,orientation) 
-        else:
-            return True
+            answ = self.board.validate_word_board_not_empty(word_letters,location,orientation) 
+        return answ
+
+    def get_word(self):
+        word = str(input("¿Qué palabra quiere agregar al tablero?: "))
+        word = word.upper()
+        num = int(len(word))
+        return word, num     
+ 
+    def get_check(self,location,num):
+        check=location[0] == 7 and (location[1]+(num)) <= 7 or location[1] == 7 and (location[0]+(num)) <= 7
+        return check
+
+    def get_location(self):
+        word,num = self.get_word() 
+        location= []
+        while True:
+            try:
+                location_row = (int(input("¿En qué fila quiere poner la palabra?(0-14): ")))
+                location_column = (int(input("¿En qué columna quiere que comience la plabra?(0-14): ")))
+                location = [location_row,location_column]
+                check = self.get_check(location,num)
+                if location_column is str or location_row is str:
+                    raise ValueError
+                elif self.board.is_empty() == True:
+                    if location[0] > 7 or location[1] > 7:
+                        raise ValueError
+                    elif check:
+                        raise ValueError
+                break
+            except ValueError:
+                print("Ubicación inválida.")
+                location = []
+        return word,location
+
+    def get_orientation(self):
+        word, location = self.get_location()
+        try:
+            orientation = str(input("¿Qué orientación tendrá la palabra? (H/V): "))
+            orientation = orientation.upper()
+            if orientation != 'H' and orientation != 'V':
+                print('Debe escribir solo la letra H o V.')
+            elif self.board.is_empty() == True:
+                if location[0] == 7 or location[1] == 7:
+                    return word,location,orientation
+                elif location[0] == 7 and orientation != 'H' or location[1] == 7 and orientation != 'V':
+                    raise ValueError
+                else:
+                    return word,location,orientation
+            else:
+                return word,location,orientation
+        except ValueError:
+                print('Recuerde pase por el centro...')
+
 
     def put_word(self,word,location,orientation):
-        player_tiles = self.current_player.tiles
         word = list(word)
+        word_to_add = list.copy(word)
         word_tiles = []
+        self.wild_tile_to_end()
         for i in range(len(word)):
-            for x in range(len(player_tiles)):
-                if word[i] == player_tiles[x].letter:
-                    word_tiles.append(player_tiles[x])
+            for x in range(len(self.current_player.tiles)):
+                if word[i] == self.current_player.tiles[x].letter:
+                    word_tiles.append(self.current_player.tiles[x])
+                    del self.current_player.tiles[x]
+                    break
+                elif self.current_player.tiles[x].letter == '?':
+                    self.current_player.tiles[x].value = self.bag_tiles.get_letter_value(word[i])
+                    self.current_player.tiles[x].letter = word[i]
+                    word_tiles.append(self.current_player.tiles[x])
+                    break
+                else:
+                    word_tiles.append(Tile(word[i],self.bag_tiles.get_letter_value(word[i])))
                     break
         if self.board.is_empty() == True:
             self.board.add_word_empty_board(word_tiles,location,orientation)
