@@ -172,16 +172,16 @@ class Board:
                 return False
         return True
 
-
-    def add_word_empty_board(self,word_tiles,location,orientation):
+    def add_tile_to_cell(self, location, word_tiles, i, orientation):
         if orientation == 'H':
-            for i in range(len(word_tiles)):
-                self.grid[int(location[0])][int(location[1]+i)].add_tile(word_tiles[i])
-            return True
+            self.grid[int(location[0])][int(location[1] + i)].add_tile(word_tiles[i])
         elif orientation == 'V':
-            for i in range(len(word_tiles)):
-                self.grid[int(location[0]+i)][int(location[1])].add_tile(word_tiles[i])
-            return True
+            self.grid[int(location[0] + i)][int(location[1])].add_tile(word_tiles[i])
+
+    def add_word_empty_board(self, word_tiles, location, orientation):
+        for i in range(len(word_tiles)):
+            self.add_tile_to_cell(location,word_tiles,i,orientation='H') if orientation == 'H' else self.add_tile_to_cell(location,word_tiles,i,orientation='V')
+        return True
         
     def add_word_not_empty_board(self,word_tiles,location,orientation):
         if orientation == 'H':
@@ -193,7 +193,7 @@ class Board:
         for i in range(len(word_tiles)):
             letter = self.location_letter(location,orientation='H',i=i)
             if letter == '':
-                self.grid[int(location[0])][int(location[1]+i)].add_tile(word_tiles[i])
+                self.add_tile_to_cell(location,word_tiles,i,orientation='H')
             elif letter != '' and letter == word_tiles[i].letter:
                 pass
             else:
@@ -204,7 +204,7 @@ class Board:
         for i in range(len(word_tiles)):
             letter = self.location_letter(location,orientation='V',i=i)
             if letter == '':
-                self.grid[int(location[0]+i)][int(location[1])].add_tile(word_tiles[i])
+                self.add_tile_to_cell(location,word_tiles,i,orientation='V')
             elif letter != '' and letter == word_tiles[i].letter:
                 pass
             else:
