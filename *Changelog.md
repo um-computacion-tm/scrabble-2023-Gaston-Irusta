@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [1.0.0] - 2023-11-08
+## Added
+# I've added tests for the main file. I moved some mothods from the main to the scrabble file, and tested them. I fixed problems with the
+# codeclimate, like cognitive level and some code lines copyed. The game has a 92% of succesfull coverage report, and it's finished.
+
 ## [0.2.8] - 2023-11-07
 ## Added
 # I have so much problems with the patch, just one test runs. I fixed some cognitive problems.
