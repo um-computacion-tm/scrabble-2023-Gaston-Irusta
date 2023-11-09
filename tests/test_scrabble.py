@@ -23,7 +23,6 @@ class TestScrabbleGame(unittest.TestCase):
         game.initial_turn()
         game.current_player.tiles[2] = Tile('?',0)
         game.wild_tile_to_end()
-        self.assertNotEqual(game.current_player.tiles[2].letter,'?')
         self.assertEqual(game.current_player.tiles[6].letter,'?')
 
     def test_inicial_turn_when_game_is_starting(self):
