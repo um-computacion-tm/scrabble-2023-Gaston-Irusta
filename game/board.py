@@ -183,28 +183,14 @@ class Board:
             self.add_tile_to_cell(location,word_tiles,i,orientation='H') if orientation == 'H' else self.add_tile_to_cell(location,word_tiles,i,orientation='V')
         return True
         
-    def add_word_not_empty_board(self,word_tiles,location,orientation):
-        if orientation == 'H':
-            return self.add_word_horizontal(word_tiles,location)
-        elif orientation == 'V':
-            return self.add_word_vertical(word_tiles,location)
+    def add_word_not_empty_board(self, word_tiles, location, orientation):
+        return self.add_word(word_tiles, location,orientation='H') if orientation == 'H' else self.add_word(word_tiles, location,orientation='V')
     
-    def add_word_horizontal(self,word_tiles,location):
+    def add_word(self, word_tiles, location, orientation):
         for i in range(len(word_tiles)):
-            letter = self.location_letter(location,orientation='H',i=i)
+            letter = self.location_letter(location, orientation=orientation, i=i)
             if letter == '':
-                self.add_tile_to_cell(location,word_tiles,i,orientation='H')
-            elif letter != '' and letter == word_tiles[i].letter:
-                pass
-            else:
-                return False
-        return True
-
-    def add_word_vertical(self,word_tiles,location):
-        for i in range(len(word_tiles)):
-            letter = self.location_letter(location,orientation='V',i=i)
-            if letter == '':
-                self.add_tile_to_cell(location,word_tiles,i,orientation='V')
+                self.add_tile_to_cell(location, word_tiles, i, orientation)
             elif letter != '' and letter == word_tiles[i].letter:
                 pass
             else:
