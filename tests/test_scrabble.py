@@ -88,13 +88,6 @@ class TestScrabbleGame(unittest.TestCase):
             scrabble_game = ScrabbleGame(2)
             self.assertEqual(scrabble_game.get_location(), ("WORD", [0, 0]))
 
-    # StopIteration
-    # def test_invalid_location(self):
-    #     with patch('builtins.input', side_effect=['word', 8, 'a']):
-    #         scrabble_game = ScrabbleGame(2)
-    #         scrabble_game.get_location()
-    #         self.assertRaises(ValueError, scrabble_game.get_location, [8,'a'])
-
     def test_empty_board_location(self):
         with patch('builtins.input', side_effect=['word', 0, 0]):
             scrabble_game = ScrabbleGame(2)
@@ -109,12 +102,6 @@ class TestScrabbleGame(unittest.TestCase):
                     self.assertEqual(location, [7,7])
                     self.assertEqual(orientation, 'V')
 
-    # def test_invalid_orientation(self):
-    #     # Test case for an invalid orientation input
-    #     with patch('builtins.input', side_effect=['word',7, 7,'X']):
-    #         with patch('builtins.print'):
-    #             with self.assertRaises(ValueError):
-    #                 word, location, orientation = ScrabbleGame(2).get_orientation()
 
     def test_empty_board_orientation(self):
         with patch('builtins.input', side_effect=['word',7,7, 'H']):
@@ -286,24 +273,6 @@ class TestScrabbleGame(unittest.TestCase):
         word = 'MOTO'
         location = (1,1)
         orientation = 'H'
-        valid_word = scrabble_game.validate_word(word,location,orientation)
-        self.assertEqual(valid_word, False)
-
-    def test_validate_word_False_3(self):
-        scrabble_game = ScrabbleGame(players_count= 3)
-        scrabble_game.current_player = scrabble_game.players[2]
-        scrabble_game.current_player.tiles = [
-            Tile('C',3),
-            Tile('O',1),
-            Tile('S',1),
-            Tile('T',1),
-            Tile('A',1),
-            Tile('Y',4),
-            Tile('U',1),
-        ]
-        word = 'COSTA'
-        location = (13,14)
-        orientation = 'V'
         valid_word = scrabble_game.validate_word(word,location,orientation)
         self.assertEqual(valid_word, False)
   

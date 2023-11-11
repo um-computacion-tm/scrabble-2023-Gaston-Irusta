@@ -107,18 +107,10 @@ class Board:
             return False
 
     def use_letter_on_board(self, word, location, orientation):
-        word_return = list.copy(word)
-        word_copy = list.copy(word)
-        for i in range(len(word_copy)):
-            if orientation == 'H':
-                letter = self.location_letter(location, orientation='H', i=i)
-                if letter == word_copy[i]:
-                    word_return.remove(word_copy[i])
-            elif orientation == 'V':
-                if int(location[0]) + i < len(self.grid):
-                    cell = self.location_letter(location, orientation='V', i=i)
-                    if cell == word_copy[i]:
-                        word_return.remove(word_copy[i])
+        word_return = list(word)
+        for i, letter in enumerate(word):
+            if self.location_letter(location, orientation, i) == letter:
+                word_return.remove(letter)
         return word_return
 
     def validate_word_and_letters_play(self,word,location,orientation,player_tiles):
