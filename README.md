@@ -9,7 +9,7 @@
 # Installation
 #   1- Make sure you have git and docker installed in your computer. Then clone the repository:
 #       git clone https://github.com/um-computacion-tm/scrabble-2023-Gaston-Irusta.git
-#   2- Eneter into the new directory:
+#   2- Enter into the new directory:
 #       cd scrabble-2023-Gaston-Irusta/
 #   3- Build the docker image in your computer:
 #       docker build -t scrabblegame .
