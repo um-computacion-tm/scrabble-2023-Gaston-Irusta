@@ -90,9 +90,8 @@ class ScrabbleGame:
         return word, num     
  
     def get_check(self, location, num):
-        row_check = location[0] == 7 and location[1] + num <= 7
-        col_check = location[1] == 7 and location[0] + num <= 7
-        return row_check or col_check
+        return location[0] == 7 and location[1] + num <= 7 or \
+               location[1] == 7 and location[0] + num <= 7
 
     def get_location(self):
         word, num = self.get_word()
