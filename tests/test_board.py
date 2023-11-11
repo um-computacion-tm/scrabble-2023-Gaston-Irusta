@@ -76,7 +76,8 @@ class TestBoard(unittest.TestCase):
         word = 'CORCHO'
         word = list(word)
         location = [4,6]
-        word_return = board.use_letter_on_board_V(word,location)
+        orientation = 'V'
+        word_return = board.use_letter_on_board(word,location,orientation)
         self.assertNotEqual(word_return,word)
 
     def test_validate_word_and_letters_play_True(self):

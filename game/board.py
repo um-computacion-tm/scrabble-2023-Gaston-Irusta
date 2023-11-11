@@ -17,11 +17,9 @@ class Board:
         self.grid[7][7] = Cell(2,'word',Tile('',0))
         self.grid[7][14] = Cell(3,'word',Tile('',0))
         
-        for i in range(1,5):
-            self.grid[i][i] = Cell(2,'word',Tile('',0))
-
-        for i in range(10,14):
-            self.grid[i][i] = Cell(2,'word',Tile('',0))
+        for i in range(1, 5):
+            self.grid[i][i] = Cell(2, 'word', Tile('', 0))
+            self.grid[i + 9][i + 9] = Cell(2, 'word', Tile('', 0))
         
         r1 = 13
         c1 = 1
@@ -63,28 +61,29 @@ class Board:
             c5 += 2
 
     def print_board(self):
-        print ('                ' , '  0    1    2    3    4    5    6    7    8    9   10   11   12   13   14\n')
-        boardRow = ''
+        rows = []
+        rows.append('                ' + '  0    1    2    3    4    5    6    7    8    9   10   11   12   13   14\n')
         for i in range(15):
+            row = ''
             for j in range(15):
-                if self.grid[i][j].tile.letter != '':
-                    boardRow += '| ' + self.grid[i][j].tile.letter + ' |'
-                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 2: 
-                    boardRow += '|2Pl|'
-                elif self.grid[i][j].multiplier_type == 'word' and self.grid[i][j].multiplier == 3: 
-                    boardRow += '|3Pl|'
-                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 2:
-                    boardRow += '|2Lt|'
-                elif self.grid[i][j].multiplier_type == 'letter' and self.grid[i][j].multiplier == 3:
-                    boardRow += '|3Lt|'
+                cell = self.grid[i][j]
+                if cell.tile.letter != '':
+                    row += '| ' + cell.tile.letter + ' |'
+                elif cell.multiplier_type == 'word' and cell.multiplier == 2: 
+                    row += '|2Pl|'
+                elif cell.multiplier_type == 'word' and cell.multiplier == 3: 
+                    row += '|3Pl|'
+                elif cell.multiplier_type == 'letter' and cell.multiplier == 2:
+                    row += '|2Lt|'
+                elif cell.multiplier_type == 'letter' and cell.multiplier == 3:
+                    row += '|3Lt|'
                 else:
-                    boardRow += '|  ' + '' + ' |'
+                    row += '|  ' + '' + ' |'
             if (i+1) <= 10:
-                print ('                ', boardRow, ' ', str(i))
+                rows.append('                ' + row + ' ' + str(i))
             else:
-                print ('                ', boardRow,'', str(i))
-            boardRow = ''
-        print('\n')
+                rows.append('                ' + row + '' + str(i))
+        print('\n'.join(rows) + '\n')
 
     def validate_word_inside_board(self, word, location, orientation):
         len_word = len(word)
@@ -107,30 +106,20 @@ class Board:
         elif n != len(word):
             return False
 
-    def use_letter_on_board_H(self,word,location):
+    def use_letter_on_board(self, word, location, orientation):
         word_return = list.copy(word)
         word_copy = list.copy(word)
         for i in range(len(word_copy)):
-            letter = self.location_letter(location,orientation='H',i=i)
-            if letter == word_copy[i]:
-                word_return.remove(word_copy[i])
-        return word_return
-
-    def use_letter_on_board_V(self, word, location):
-        word_return = list.copy(word)
-        word_copy = list.copy(word)
-        for i in range(len(word_copy)):
-            if int(location[0]) + i < len(self.grid):
-                cell = self.location_letter(location,orientation='V',i=i)
-                if cell == word_copy[i]:
+            if orientation == 'H':
+                letter = self.location_letter(location, orientation='H', i=i)
+                if letter == word_copy[i]:
                     word_return.remove(word_copy[i])
+            elif orientation == 'V':
+                if int(location[0]) + i < len(self.grid):
+                    cell = self.location_letter(location, orientation='V', i=i)
+                    if cell == word_copy[i]:
+                        word_return.remove(word_copy[i])
         return word_return
-
-    def use_letter_on_board(self,word,location,orientation):
-        if orientation == 'H':
-            return self.use_letter_on_board_H(word,location)
-        elif orientation == 'V':
-            return self.use_letter_on_board_V(word,location)
 
     def validate_word_and_letters_play(self,word,location,orientation,player_tiles):
         word = self.use_letter_on_board(word,location,orientation)
@@ -147,12 +136,15 @@ class Board:
                     break
         return self.verify_n(word,n)
 
-    def location_letter(self,location,orientation,i):
+    def location_cell(self,location,orientation,i):
         if orientation == 'H':
-            letter = self.grid[int(location[0])][int(location[1]+i)].tile.letter
+            return self.grid[int(location[0])][int(location[1]+i)]
         elif orientation == 'V':
-            letter = self.grid[int(location[0]+i)][int(location[1])].tile.letter
-        return letter
+            return self.grid[int(location[0]+i)][int(location[1])]
+    
+    def location_letter(self,location,orientation,i):
+        cell = self.location_cell(location,orientation,i)
+        return cell.tile.letter
 
     def validate_place_board_not_empty(self, word, location, orientation):
         cross = any(self.location_letter(location, orientation, i) != '' for i in range(len(word)))
@@ -173,10 +165,8 @@ class Board:
         return True
 
     def add_tile_to_cell(self, location, word_tiles, i, orientation):
-        if orientation == 'H':
-            self.grid[int(location[0])][int(location[1] + i)].add_tile(word_tiles[i])
-        elif orientation == 'V':
-            self.grid[int(location[0] + i)][int(location[1])].add_tile(word_tiles[i])
+        cell = self.location_cell(location,orientation,i)
+        cell.add_tile(word_tiles[i])
 
     def add_word_empty_board(self, word_tiles, location, orientation):
         for i in range(len(word_tiles)):
