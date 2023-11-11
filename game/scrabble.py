@@ -73,13 +73,13 @@ class ScrabbleGame:
         if self.dic.verify_word(word) == False:
             print('La palabra no existe.')
             answ = False
-        if self.board.validate_word_inside_board(word_letters,location,orientation) == False:
+        elif self.board.validate_word_inside_board(word_letters,location,orientation) == False:
             print('La palabra no entra en el tablero.')
             answ = False
-        if self.board.validate_word_and_letters_play(word_letters,location,orientation,player_tiles) == False:
+        elif self.board.validate_word_and_letters_play(word_letters,location,orientation,player_tiles) == False:
             print('No tienes las letras para formar la plabra.')
             answ = False
-        if self.board.is_empty() == False:
+        elif self.board.is_empty() == False:
             answ = self.board.validate_word_board_not_empty(word_letters,location,orientation) 
         return answ
 
